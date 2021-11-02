@@ -2,31 +2,32 @@ package com.lostarktodo.domain;
 
 public class UserDTO {
 	
-	private int idx; // 유저 고유 번호(PK)
-	private String id; // 사용자 아이디
-	private String pw; // 암호화되어 저장된 비밀번호
+	private long idx; // 유저 고유 번호(PK)
+	private String userid; // 사용자 아이디
+	private String password; // 암호화 되어 저장된 비밀번호
 	
-	public int getIdx() {
+	public long getIdx() {
 		return idx;
 	}
-	public void setIdx(int idx) {
+	public void setIdx(long idx) {
 		this.idx = idx;
 	}
-	public String getId() {
-		return id;
+	public String getUserid() {
+		return userid;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
-	public String getPw() {
-		return pw;
+	public String getPassword() {
+		return password;
 	}
-	public void setPw(String pw) {
-		this.pw = pw;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	@Override
 	public String toString() {
-		return "UserDTO [idx=" + idx + ", id=" + id + ", pw=" + pw + "]";
+		return "UserDTO [idx=" + idx + ", userid=" + userid + ", password=" + password + "]";
 	}
+	
 }

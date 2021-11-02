@@ -19,23 +19,23 @@ public class MapperTests {
 	@Test
 	public void testOfInsert() {
 		UserDTO params = new UserDTO();
-		params.setId("1번 계정");
-		params.setPw("1234");
+		params.setUserid("1번계정");
+		params.setPassword("1234");
 		
 		int result = userMapper.insertUser(params);
 		System.out.println("testOfInsert 결과: " + result);
 	}
 	
-	@Test
-	public void testOfSelectDetail() {
-		UserDTO user = userMapper.selectUserDetail((int)1);
-		try {
-			String userJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(user);
-			System.out.println("======================");
-			System.out.println(userJson);
-			System.out.println("======================");
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-	}
+//	@Test
+//	public void testOfSelectDetail() {
+//		UserDTO user = userMapper.selectUserDetail((long)1);
+//		try {
+//			String userJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(user);
+//			System.out.println("======================");
+//			System.out.println(userJson);
+//			System.out.println("======================");
+//		} catch (JsonProcessingException e) {
+//			e.printStackTrace();
+//		}
+//	}
 }
