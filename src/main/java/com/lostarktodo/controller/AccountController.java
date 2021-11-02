@@ -23,6 +23,11 @@ public class AccountController {
 	
 	@GetMapping(value = "/account/register")
 	public String openAccountRegister(Model model) {
+		UserDTO params = new UserDTO();
+		params.setIdx(0);
+		params.setUserid("");
+		params.setPassword("");
+		model.addAttribute("params", params);
 		return "account/register";
 	}
 	
@@ -36,11 +41,11 @@ public class AccountController {
 		System.out.println(params.toString());
 		
 		// 유효성 검사
-		if (params.getUserid() == null) {
+		if (params.getUserid() == "" || params.getUserid() == null) {
 			model.addAttribute("didNotTypeUserid", true);
 			return "account/register";
 		}
-		if (params.getPassword() == null) {
+		if (params.getPassword() == "" || params.getUserid() == null) {
 			model.addAttribute("didNotTypePassword", true);
 			return "account/register";
 		}
@@ -49,7 +54,6 @@ public class AccountController {
 		if (accountService.registerUser(params)) {
 			return "account/login";
 		} else {
-			System.out.println("이미 있는 아이디지롱");
 			model.addAttribute("alreadyExistUserid", true);
 			return "account/register";
 		}
