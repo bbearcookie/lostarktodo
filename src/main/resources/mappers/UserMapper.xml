@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lostarktodo.mapper.UserMapper">
+
+	<sql id="userColumns">
+		idx,
+		id,
+		pw
+	</sql>
+	
+	<insert id="insertUser" parameterType="UserDTO">
+		INSERT INTO Users(
+			<include refid="userColumns"/>
+		) VALUES (
+			#{idx},
+			#{id},
+			#{pw}
+		)
+	</insert>
+	
+	<select id="selectUserDetail" parameterType="int" resultType="UserDTO">
+		SELECT
+			<include refid="userColumns" />
+		FROM
+			Users
+		WHERE
+			idx = #{idx}
+	</select>
+
+</mapper>
