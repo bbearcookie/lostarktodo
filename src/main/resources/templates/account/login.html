@@ -22,6 +22,22 @@
         <div th:if="${param.logout}" class="alert alert-primary" role="alert">
             You have been logged out.
         </div>
+
+        <div th:if="${didNotTypeUsername}" class="alert alert-danger" role="alert">
+          아이디를 입력해주세요.
+        </div>
+
+        <div th:if="${didNotTypePassword}" class="alert alert-danger" role="alert">
+         비밀번호를 입력해주세요.
+        </div>
+
+        <div th:if="${didNotExistUsername}" class="alert alert-danger" role="alert">
+          존재하지 않는 아이디입니다. 먼저 회원가입 해주세요.
+        </div>
+
+        <div th:if="${didNotCorrectPassword}" class="alert alert-danger" role="alert">
+          비밀번호가 틀렸습니다.
+        </div>
     
         <div class="form-floating">
           <input type="text" class="form-control" name="username" id="floatingInput" placeholder="아이디">

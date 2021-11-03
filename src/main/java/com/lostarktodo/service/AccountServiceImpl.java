@@ -24,11 +24,29 @@ public class AccountServiceImpl implements AccountService {
 	private PasswordEncoder passwordEncoder;
 	
 	@Override
-	public boolean registerUser(UserDTO params) {
-		System.out.println("서비스의 registerUser 호출!!");
+	public boolean checkWhetherExistUsername(String username) {
+		if (userMapper.checkWhetherExistUsername(username) > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean checkWhetherSamePassword(UserDTO params) {
+		UserDTO originData = userMapper.findByUsername(params.getUsername());
 		
+		if (passwordEncoder.matches(params.getPassword(), originData.getPassword())) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean registerUser(UserDTO params) {
 		// 이미 존재하는 id 일경우
-		if (userMapper.checkWhetherExistID(params.getUserid()) > 0) {
+		if (checkWhetherExistUsername(params.getUsername())) {
 			return false;
 		}
 
@@ -39,17 +57,10 @@ public class AccountServiceImpl implements AccountService {
 	}
 	
 	@Override
-	public boolean loginUser(UserDTO params) {
-		System.out.println("서비스의 loginUser 호출!!");
-		
-		return true;
-	}
-	
-	@Override
-	public UserContext loadUserByUsername(String userid) throws UsernameNotFoundException {
-		UserDTO user = userMapper.findByUserid(userid);
+	public UserContext loadUserByUsername(String username) throws UsernameNotFoundException {
+		UserDTO user = userMapper.findByUsername(username);
 
-        if (user == null){
+        if (user == null) {
             throw new UsernameNotFoundException("UsernameNotFoundException");
         }
         

@@ -40,8 +40,8 @@ public class MapperTests {
 //	}
 	
 	@Test
-	public void testOfFindByUserid() {
-		UserDTO user = userMapper.findByUserid("aodem");
+	public void testOfFindByUsername() {
+		UserDTO user = userMapper.findByUsername("aodem");
 		try {
 			String userJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(user);
 			System.out.println("======================");

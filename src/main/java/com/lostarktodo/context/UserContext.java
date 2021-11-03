@@ -12,7 +12,7 @@ public class UserContext extends User {
     private final UserDTO user;
 
     public UserContext(UserDTO user, Collection<? extends GrantedAuthority> authorities) {
-        super(user.getUserid(), user.getPassword(), authorities);
+        super(user.getUsername(), user.getPassword(), authorities);
         this.user = user;
     }
 

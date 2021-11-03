@@ -7,6 +7,6 @@ import com.lostarktodo.domain.UserDTO;
 @Mapper
 public interface UserMapper {
 	public int insertUser(UserDTO params);
-	public int checkWhetherExistID(String userid);
-	public UserDTO findByUserid(String userid);
+	public int checkWhetherExistUsername(String userid);
+	public UserDTO findByUsername(String userid);
 }

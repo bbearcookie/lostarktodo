@@ -3,7 +3,7 @@
 <mapper namespace="com.lostarktodo.mapper.UserMapper">
 	<sql id="userColumns">
 		idx,
-		userid,
+		username,
 		password,
 		role
 	</sql>
@@ -13,27 +13,27 @@
 			<include refid="userColumns"/>
 		) VALUES (
 			#{idx},
-			#{userid},
+			#{username},
 			#{password},
 			#{role}
 		)
 	</insert>
 	
-	<select id="checkWhetherExistID" parameterType="String" resultType="int">
+	<select id="checkWhetherExistUsername" parameterType="String" resultType="int">
 		SELECT
 			COUNT(*)
 		FROM
 			user
 		WHERE
-			userid = #{userid}
+			username = #{username}
 	</select>
 	
-	<select id="findByUserid" parameterType="String" resultType="UserDTO">
+	<select id="findByUsername" parameterType="String" resultType="UserDTO">
 		SELECT
 			<include refid="userColumns"/>
 		FROM
 			user
 		WHERE
-			userid = #{userid}
+			username = #{username}
 	</select>
 </mapper>

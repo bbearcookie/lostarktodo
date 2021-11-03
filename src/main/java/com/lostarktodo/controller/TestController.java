@@ -16,7 +16,6 @@ public class TestController {
 
 	@GetMapping(value = "/hello")
 	public String helloWorld(Model model) {
-		System.out.println("GET /hello");
 		return "test/hello";
 	}
 }

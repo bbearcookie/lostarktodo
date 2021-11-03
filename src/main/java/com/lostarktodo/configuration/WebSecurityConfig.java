@@ -38,19 +38,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 			.formLogin()
 				.loginPage("/account/login") // 접근 권한 없는 페이지에 접근하면 자동으로 /login 페이지로 리다이렉션시킴. 거기서 로그인 성공하면 권한 없던 페이지에 다시 이동.
-//                .successForwardUrl("/success") // 로그인 성공 URL을 설정함
-//                .failureForwardUrl("/account/login") // 로그인 실패 URL을 설정함
+                .successForwardUrl("/account/login/success") // 로그인 성공시 이 URL에 POST 요청을 하게됨.
+                .failureForwardUrl("/account/login/failure") // 로그인 실패 URL을 설정함
 				.permitAll() // 권한 없는 사용자도 /login 페이지에는 접근 가능하게끔 함.
 				.and()
 			.logout()
-				.logoutSuccessUrl("/account/logout")
+				.logoutSuccessUrl("/account/login")
 				.permitAll(); // 로그 아웃 또한 권한 없는 누구나 가능.
 	}
 	
-	// 실제로 인증이 일어나는 provider 등록
+	// 실제로 인증이 일어나는 provider를 커스터마이징한 AuthenticationProvider로 등록시켜주는 설정입니다. 해당 설정을통해 인증과정을 직접 구현해줄수 있습니다.  
     @Override
     public void configure(AuthenticationManagerBuilder builder) throws Exception {
-        // 위 AuthenticationManagerBuilder 설정은 실제로 인증이 일어나는 provider를 커스터마이징한 AuthenticationProvider로 등록시켜주는 설정입니다. 해당 설정을통해 인증과정을 직접 구현해줄수 있습니다.  
         builder.authenticationProvider(accountAuthenticationProvider());
     }
 	
