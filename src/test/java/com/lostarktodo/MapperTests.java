@@ -16,16 +16,16 @@ public class MapperTests {
 	@Autowired
 	private UserMapper userMapper;
 	
-	@Test
-	public void testOfInsert() {
-		UserDTO params = new UserDTO();
-		params.setUserid("1번계정");
-		params.setPassword("1234");
-		
-		int result = userMapper.insertUser(params);
-		System.out.println("testOfInsert 결과: " + result);
-	}
-	
+//	@Test
+//	public void testOfInsert() {
+//		UserDTO params = new UserDTO();
+//		params.setUserid("1번계정");
+//		params.setPassword("1234");
+//		
+//		int result = userMapper.insertUser(params);
+//		System.out.println("testOfInsert 결과: " + result);
+//	}
+//	
 //	@Test
 //	public void testOfSelectDetail() {
 //		UserDTO user = userMapper.selectUserDetail((long)1);
@@ -38,4 +38,17 @@ public class MapperTests {
 //			e.printStackTrace();
 //		}
 //	}
+	
+	@Test
+	public void testOfFindByUserid() {
+		UserDTO user = userMapper.findByUserid("aodem");
+		try {
+			String userJson = new ObjectMapper().registerModule(new JavaTimeModule()).writeValueAsString(user);
+			System.out.println("======================");
+			System.out.println(userJson);
+			System.out.println("======================");
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+	}
 }

@@ -4,7 +4,8 @@
 	<sql id="userColumns">
 		idx,
 		userid,
-		password
+		password,
+		role
 	</sql>
 	
 	<insert id="insertUser" parameterType="UserDTO">
@@ -13,13 +14,23 @@
 		) VALUES (
 			#{idx},
 			#{userid},
-			#{password}
+			#{password},
+			#{role}
 		)
 	</insert>
 	
 	<select id="checkWhetherExistID" parameterType="String" resultType="int">
 		SELECT
 			COUNT(*)
+		FROM
+			user
+		WHERE
+			userid = #{userid}
+	</select>
+	
+	<select id="findByUserid" parameterType="String" resultType="UserDTO">
+		SELECT
+			<include refid="userColumns"/>
 		FROM
 			user
 		WHERE

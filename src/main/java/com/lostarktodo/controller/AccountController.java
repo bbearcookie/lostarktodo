@@ -31,10 +31,11 @@ public class AccountController {
 		return "account/register";
 	}
 	
-	@PostMapping(value = "/account/login")
-	public String postAccountLogin(Model model) {
-		return "";
-	}
+//	@PostMapping(value = "/account/login")
+//	public String postAccountLogin(@ModelAttribute("params") final UserDTO params, Model model) {
+//		System.out.println(params.toString());
+//		return "account/login";
+//	}
 	
 	@PostMapping(value = "/account/register")
 	public String postAccountRegister(@ModelAttribute("params") final UserDTO params, Model model) {
