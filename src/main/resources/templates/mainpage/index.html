@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/basic">
+
+  <th:block layout:fragment="style">
+    <link th:href="@{/css/mainpage/index.css}" rel="stylesheet">
+  </th:block>
+
+  <th:block layout:fragment="title">
+    <title>This is a hello page!!!!</title>
+  </th:block>
+
+  <th:block layout:fragment="navbar">
+    <nav class="navbar navbar-light bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand text-light">Navbar</a>
+        <form class="d-flex" th:action="@{/logout}" method="post">
+          <button class="w-100 btn btn-lg btn-primary" type="submit">로그아웃</button>
+        </form>
+      </div>
+    </nav>
+  </th:block>
+
+  <th:block layout:fragment="body">
+    <main class="container-fluid">
+      <section class="container-lg">
+        <div class="hero-label">
+          <h5 class="ps-2 pt-3" style="font-weight: bold;">캐릭터</h5>
+          <button type="button" class="btn btn-secondary">추가</button>
+        </div>
+        <hr/>
+
+        <section class="row">
+
+          <article class="col-lg-3 col-md-4 col-sm-6 mb-2">
+            <div class="hero card p-1 mb-3">
+              <div class="row g-0">
+                <div class="image-section col-3">
+                  <img width="65px" height="65px" th:attr="src=@{/icon/hero/normal/warlord.png}" class="img-fluid rounded-start" alt="캐릭터 아이콘">
+                </div>
+                <div class="col-9">
+                  <div class="card-body">
+                    <p class="card-title">워로드</p>
+                    <p class="card-text">닉네임이열두글자까지갈까요</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mb-3">
+              <div class="col-12 btn-group">
+                <button type="button" class="btn btn-primary">캐릭터 수정</button>
+                <button type="button" class="btn btn-danger">캐릭터 삭제</button>
+              </div>
+            </div>
+          </article>
+          
+        </section>
+      </section>
+    </main>
+  </th:block>
+
+  <th:block layout:fragment="footer">
+    <footer class="container-fluid">
+      <p>자기 멋대로인 스프링</p>
+    </footer>
+  </th:block>
+</html>

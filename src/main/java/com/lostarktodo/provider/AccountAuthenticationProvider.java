@@ -26,7 +26,7 @@ public class AccountAuthenticationProvider implements AuthenticationProvider {
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         String username = authentication.getName();
-        String password = (String) authentication.getCredentials();
+        String password = (String)authentication.getCredentials();
         
     	UserContext userContext = (UserContext)accountService.loadUserByUsername(username);
     	UserDTO user = userContext.getUser();

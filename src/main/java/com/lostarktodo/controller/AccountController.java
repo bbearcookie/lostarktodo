@@ -35,7 +35,7 @@ public class AccountController {
 
 	@PostMapping(value = "/account/login/success")
 	public String loginSuccess(Model model) {
-		return "redirect:/hello";
+		return "redirect:/mainpage";
 	}
 	
 	@PostMapping(value = "/account/login/failure")

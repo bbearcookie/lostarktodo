@@ -26,7 +26,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	// 이 파일들은 권한이 없어도 접근할 수 있어야함.
 	@Override
 	public void configure(WebSecurity web) {
-		web.ignoring().antMatchers("/plugin/bootstrap-5.1.3-dist/**", "/css/**");
+		web.ignoring().antMatchers("/plugin/**", "/css/**", "/icon/**");
 	}
 	
 	@Override
