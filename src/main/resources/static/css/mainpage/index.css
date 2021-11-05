@@ -51,3 +51,8 @@ footer {
   color: gray;
   margin-bottom: 0;
 }
+
+#heroAddModal .dropdown-menu {
+  max-height: 200px;
+  overflow-y: auto;
+}

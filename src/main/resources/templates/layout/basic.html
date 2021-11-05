@@ -14,10 +14,12 @@
 	</head>
 
   <body>
+		<th:block layout:fragment="modal"></th:block>
 		<th:block layout:fragment="navbar"></th:block>
     <th:block layout:fragment="body"></th:block>
 		<th:block layout:fragment="footer"></th:block>
-    <script th:src="@{/plugin/bootstrap-5.1.3-dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/plugin/bootstrap-5.1.3-dist/js/bootstrap.bundle.js}"></script>
+
 		<th:block layout:fragment="script"></th:block>
 	</body>
   

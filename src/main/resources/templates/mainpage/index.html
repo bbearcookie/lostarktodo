@@ -20,17 +20,61 @@
     </nav>
   </th:block>
 
+  <th:block layout:fragment="modal">
+    <section class="modal fade" id="heroCreateModal" tabindex="-1" aria-labelledby="heroCreateModal" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="heroCreateModalLabel" style="font-weight: bold;">캐릭터 추가</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+  
+          <form class="row modal-body" method="post">
+            <div class="col-1 d-flex align-items-center">
+              <img
+                width="65px"
+                height="65px"
+                th:src="@{/icon/hero/normal/{heroClassName}.png(heroClassName=${heroClassName})}"
+                class="img-fluid rounded-start"
+                alt="캐릭터 아이콘"/>
+            </div>
+  
+            <div class="col-3">
+              <div style="color: gray;">직업</div>
+  
+              <select class="form-select" aria-label="heroSelect">
+                <option selected value="0">선택</option>
+                <tr th:each="heroType: ${heroTypeList}">
+                  <option th:value="${heroType.idx}" th:text="${heroType.nameKr}">직업명</option>
+                </tr>
+              </select>
+            </div>
+  
+            <div class="col-8">
+              <div style="color: gray;">캐릭터 이름</div>
+              <input type="text" class="form-control" id="heroName" placeholder="캐릭터명을 입력해주세요."/>
+            </div>
+          </form>
+  
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <button type="button" class="btn btn-primary">저장</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </th:block>
+
   <th:block layout:fragment="body">
     <main class="container-fluid">
       <section class="container-lg">
         <div class="hero-label">
           <h5 class="ps-2 pt-3" style="font-weight: bold;">캐릭터</h5>
-          <button type="button" class="btn btn-secondary">추가</button>
+          <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#heroCreateModal">추가</button>
         </div>
         <hr/>
 
         <section class="row">
-
           <article class="col-lg-3 col-md-4 col-sm-6 mb-2">
             <div class="hero card p-1 mb-3">
               <div class="row g-0">
@@ -55,6 +99,7 @@
           </article>
           
         </section>
+
       </section>
     </main>
   </th:block>
@@ -63,5 +108,13 @@
     <footer class="container-fluid">
       <p>자기 멋대로인 스프링</p>
     </footer>
+  </th:block>
+
+  <th:block layout:fragment="script">
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+
+      /*]]>*/
+    </script>
   </th:block>
 </html>
