@@ -22,46 +22,48 @@
 
   <th:block layout:fragment="modal">
     <section class="modal fade" id="heroCreateModal" tabindex="-1" aria-labelledby="heroCreateModal" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
+      <form class="modal-dialog modal-lg" th:action="@{/hero/write}" th:object="${heroParams}" method="post">
+
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="heroCreateModalLabel" style="font-weight: bold;">캐릭터 추가</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
   
-          <form class="row modal-body" method="post">
+          <div class="row modal-body">
             <div class="col-1 d-flex align-items-center">
               <img
-                width="65px"
-                height="65px"
-                th:src="@{/icon/hero/normal/{heroClassName}.png(heroClassName=${heroClassName})}"
-                class="img-fluid rounded-start"
-                alt="캐릭터 아이콘"/>
+              width="65px"
+              height="65px"
+              src="/icon/hero/default.png"
+              class="heroIcon img-fluid rounded-start"
+              alt="캐릭터 아이콘"/>
             </div>
   
             <div class="col-3">
               <div style="color: gray;">직업</div>
-  
-              <select class="form-select" aria-label="heroSelect">
-                <option selected value="0">선택</option>
-                <tr th:each="heroType: ${heroTypeList}">
-                  <option th:value="${heroType.idx}" th:text="${heroType.nameKr}">직업명</option>
-                </tr>
+
+              <select th:field="*{typeIdx}" class="form-select" aria-label="heroSelect" onchange="onHeroSelectChange(this)">
+                <option value="0" selected>선택</option>
+                <option th:each="heroType: ${heroTypeList}" th:value="${heroType.idx}" th:text="${heroType.nameKr}">
               </select>
+
             </div>
   
             <div class="col-8">
               <div style="color: gray;">캐릭터 이름</div>
-              <input type="text" class="form-control" id="heroName" placeholder="캐릭터명을 입력해주세요."/>
+              <input type="text" th:field="*{name}" class="form-control" placeholder="캐릭터명을 입력해주세요." maxlength="12"/>
             </div>
-          </form>
+          </div>
   
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-            <button type="button" class="btn btn-primary">저장</button>
+            <button type="submit" class="btn btn-primary">저장</button>
           </div>
         </div>
-      </div>
+
+
+      </form>
     </section>
   </th:block>
 
@@ -113,7 +115,16 @@
   <th:block layout:fragment="script">
     <script th:inline="javascript">
       /*<![CDATA[*/
-
+      function onHeroSelectChange(e) {
+        let imgElement = document.querySelector("#heroCreateModal .heroIcon");
+        let heroTypeList = /*[[ ${heroTypeList} ]]*/ null;
+        if (e.value > 0) {
+          let heroType = heroTypeList[e.value - 1];
+          imgElement.setAttribute("src", "/icon/hero/normal/" + heroType.nameEn + ".png");
+        } else {
+          imgElement.setAttribute("src", "/icon/hero/default.png");
+        }
+      }
       /*]]>*/
     </script>
   </th:block>
