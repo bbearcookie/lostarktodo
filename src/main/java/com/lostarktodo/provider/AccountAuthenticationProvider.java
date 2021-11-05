@@ -36,6 +36,7 @@ public class AccountAuthenticationProvider implements AuthenticationProvider {
     		throw new BadCredentialsException("비밀번호가 틀립니다.");
     	}
     	
+    	// 타임리프 템플릿엔진을 적용한 html 파일에서 태그 속성으로 sec:authentication="name" 를 적으면 여기 토큰에서 보낸 userContext.getUser() 값이 반환된다.
         UsernamePasswordAuthenticationToken authenticationToken = 
         		new UsernamePasswordAuthenticationToken(userContext.getUser(), null, userContext.getAuthorities());
 

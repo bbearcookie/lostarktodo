@@ -2,15 +2,15 @@ package com.lostarktodo.domain;
 
 public class UserDTO {
 	
-	private long idx; // 유저 고유 번호(PK)
+	private int idx; // 유저 고유 번호(PK)
 	private String username; // 사용자 아이디
 	private String password; // 암호화 되어 저장된 비밀번호
 	private String role;
 	
-	public long getIdx() {
+	public int getIdx() {
 		return idx;
 	}
-	public void setIdx(long idx) {
+	public void setIdx(int idx) {
 		this.idx = idx;
 	}
 	public String getUsername() {

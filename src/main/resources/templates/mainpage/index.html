@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/basic">
+<html lang="ko"
+xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+layout:decorator="layout/basic">
 
   <th:block layout:fragment="style">
     <link th:href="@{/css/mainpage/index.css}" rel="stylesheet">
@@ -21,12 +25,13 @@
   </th:block>
 
   <th:block layout:fragment="modal">
-    <section class="modal fade" id="heroCreateModal" tabindex="-1" aria-labelledby="heroCreateModal" aria-hidden="true">
-      <form class="modal-dialog modal-lg" th:action="@{/hero/write}" th:object="${heroParams}" method="post">
 
+    <!-- 캐릭터 추가 및 수정 모달 -->
+    <section class="modal fade" id="heroWriteModal" tabindex="-1" aria-labelledby="heroWriteModal" aria-hidden="true">
+      <form class="modal-dialog modal-lg" th:action="@{/hero/write}" th:object="${heroParams}" method="post">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="heroCreateModalLabel" style="font-weight: bold;">캐릭터 추가</h5>
+            <h5 class="modal-title" id="heroWriteModalLabel" style="font-weight: bold;">캐릭터 정보</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
   
@@ -47,12 +52,11 @@
                 <option value="0" selected>선택</option>
                 <option th:each="heroType: ${heroTypeList}" th:value="${heroType.idx}" th:text="${heroType.nameKr}">
               </select>
-
             </div>
   
             <div class="col-8">
-              <div style="color: gray;">캐릭터 이름</div>
-              <input type="text" th:field="*{name}" class="form-control" placeholder="캐릭터명을 입력해주세요." maxlength="12"/>
+              <div style="color: gray;">캐릭터명</div>
+              <input type="text" th:field="*{name}" class="heroName form-control" placeholder="캐릭터명을 입력해주세요." maxlength="12"/>
             </div>
           </div>
   
@@ -62,9 +66,11 @@
           </div>
         </div>
 
-
       </form>
     </section>
+
+    <!-- TODO: 스케줄 추가 및 수정 모달 -->
+
   </th:block>
 
   <th:block layout:fragment="body">
@@ -72,7 +78,7 @@
       <section class="container-lg">
         <div class="hero-label">
           <h5 class="ps-2 pt-3" style="font-weight: bold;">캐릭터</h5>
-          <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#heroCreateModal">추가</button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#heroWriteModal" onclick="onOpenHeroWriteModal()">추가</button>
         </div>
         <hr/>
 
@@ -94,7 +100,7 @@
 
             <div class="row mb-3">
               <div class="col-12 btn-group">
-                <button type="button" class="btn btn-primary">캐릭터 수정</button>
+                <button type="button" class="btn btn-secondary" onclick="onOpenHeroWriteModal()">캐릭터 수정</button>
                 <button type="button" class="btn btn-danger">캐릭터 삭제</button>
               </div>
             </div>
@@ -115,16 +121,32 @@
   <th:block layout:fragment="script">
     <script th:inline="javascript">
       /*<![CDATA[*/
+
+      // 캐릭터 추가 및 수정 모달에서 사용되는 함수. 직업 선택 select의 값이 바뀔 때마다 아이콘을 변경해준다.
       function onHeroSelectChange(e) {
-        let imgElement = document.querySelector("#heroCreateModal .heroIcon");
+        let heroIconEl = document.querySelector("#heroWriteModal .heroIcon");
         let heroTypeList = /*[[ ${heroTypeList} ]]*/ null;
         if (e.value > 0) {
           let heroType = heroTypeList[e.value - 1];
-          imgElement.setAttribute("src", "/icon/hero/normal/" + heroType.nameEn + ".png");
+          heroIconEl.setAttribute("src", "/icon/hero/normal/" + heroType.nameEn + ".png");
         } else {
-          imgElement.setAttribute("src", "/icon/hero/default.png");
+          heroIconEl.setAttribute("src", "/icon/hero/default.png");
         }
       }
+
+      // 캐릭터 추가 및 수정 모달을 열 때마다 input 값들 초기화
+      function onOpenHeroWriteModal() {
+        // 직업 아이콘 초기화
+        let heroIconEl = document.querySelector("#heroWriteModal .heroIcon");
+        heroIconEl.setAttribute("src", "/icon/hero/default.png");
+
+        // 직업 선택 select의 값 초기화
+        document.querySelector("#heroWriteModal select").value = 0;
+
+        // 캐릭터명 input의 값 초기화
+        document.querySelector("#heroWriteModal .heroName").value = "";
+      }
+
       /*]]>*/
     </script>
   </th:block>
