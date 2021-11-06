@@ -6,6 +6,8 @@ public class HeroDTO {
 	private String name; // 캐릭터 닉네임
 	private int typeIdx; // 직업 코드. 캐릭터 이미지 등을 구분하기 위함.
 	private int userIdx; // UserDTO의 idx를 가리키는 외래 키(FK)
+	private String disabled; // 캐릭터 삭제 여부
+	private HeroTypeDTO heroTypeDTO; // HeroTypeDTO와 join
 	
 	public int getIdx() {
 		return idx;
@@ -31,10 +33,24 @@ public class HeroDTO {
 	public void setUserIdx(int userIdx) {
 		this.userIdx = userIdx;
 	}
+	public String getDisabled() {
+		return disabled;
+	}
+	public void setDisabled(String disabled) {
+		this.disabled = disabled;
+	}
+	public HeroTypeDTO getHeroTypeDTO() {
+		return heroTypeDTO;
+	}
+	public void setHeroTypeDTO(HeroTypeDTO heroTypeDTO) {
+		this.heroTypeDTO = heroTypeDTO;
+	}
 	
 	@Override
 	public String toString() {
-		return "HeroDTO [idx=" + idx + ", name=" + name + ", typeIdx=" + typeIdx + ", userIdx=" + userIdx + "]";
+		return "HeroDTO [idx=" + idx + ", name=" + name + ", typeIdx=" + typeIdx + ", userIdx=" + userIdx
+				+ ", disabled=" + disabled + ", heroTypeDTO=" + heroTypeDTO + "]";
 	}
+	
 	
 }

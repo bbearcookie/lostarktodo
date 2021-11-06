@@ -28,7 +28,7 @@ layout:decorator="layout/basic">
 
     <!-- 캐릭터 추가 및 수정 모달 -->
     <section class="modal fade" id="heroWriteModal" tabindex="-1" aria-labelledby="heroWriteModal" aria-hidden="true">
-      <form class="modal-dialog modal-lg" th:action="@{/hero/write}" th:object="${heroParams}" method="post">
+      <form class="modal-dialog modal-lg" th:action="@{/hero/write}" th:object="${heroWriteParams}" method="post">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="heroWriteModalLabel" style="font-weight: bold;">캐릭터 정보</h5>
@@ -93,16 +93,22 @@ layout:decorator="layout/basic">
         <hr/>
 
         <section class="row">
-          <article class="col-lg-3 col-md-4 col-sm-6 mb-2">
+
+          <article th:each="hero : ${heroList}" class="col-lg-3 col-md-4 col-sm-6 mb-2">
             <div class="hero card p-1 mb-3">
               <div class="row g-0">
                 <div class="image-section col-3">
-                  <img width="65px" height="65px" th:attr="src=@{/icon/hero/normal/warlord.png}" class="img-fluid rounded-start" alt="캐릭터 아이콘">
+                  <img
+                  width="65px"
+                  height="65px"
+                  th:src="@{/icon/hero/normal/{name}.png(name=${hero.heroTypeDTO.nameEn})}"
+                  class="heroIcon img-fluid rounded-start"
+                  alt="캐릭터 아이콘"/>
                 </div>
                 <div class="col-9">
                   <div class="card-body">
-                    <p class="card-title">워로드</p>
-                    <p class="card-text">닉네임이열두글자까지갈까요</p>
+                    <p class="card-title" th:text="${hero.heroTypeDTO.nameKr}">직업명</p>
+                    <p class="card-text" th:text="${hero.name}">캐릭터명</p>
                   </div>
                 </div>
               </div>
@@ -110,12 +116,12 @@ layout:decorator="layout/basic">
 
             <div class="row mb-3">
               <div class="col-12 btn-group">
-                <button type="button" class="btn btn-secondary" onclick="onOpenHeroWriteModal()">캐릭터 수정</button>
+                <button type="button" class="btn btn-secondary">캐릭터 수정</button>
                 <button type="button" class="btn btn-danger">캐릭터 삭제</button>
               </div>
             </div>
           </article>
-          
+
         </section>
 
       </section>
@@ -159,10 +165,12 @@ layout:decorator="layout/basic">
 
       // 화면 로드시
       window.onload = function() {
+        const heroList = /*[[ ${heroList} ]]*/ null;
+        console.log(heroList);
 
         // 캐릭터 추가 및 수정 모달 캐릭터 아이콘 설정
-        const heroParams = /*[[ ${heroParams} ]]*/ null;
-        changeHeroIcon(heroParams.typeIdx);
+        const heroWriteParams = /*[[ ${heroWriteParams} ]]*/ null;
+        changeHeroIcon(heroWriteParams.typeIdx);
 
         // 캐릭터 추가 및 수정 모달 폼에서 POST 요청후 리다이렉션 했는데
         // 유효성 검증에 실패했을 경우 사용자가 수정할 수 있게 다시 모달을 띄어줌.

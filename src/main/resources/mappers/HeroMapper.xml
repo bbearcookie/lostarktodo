@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lostarktodo.mapper.HeroMapper">
+  <sql id="heroColumns">
+    idx,
+    name,
+    type_idx,
+    user_idx,
+    disabled
+  </sql>
+  
+  <insert id="insertHero" parameterType="HeroDTO">
+    INSERT INTO hero (
+      <include refid="heroColumns"/>
+    ) VALUES (
+      #{idx},
+      #{name},
+      #{typeIdx},
+      #{userIdx},
+      IFNULL(#{disabled}, 'N')
+    )
+  </insert>
+  
+  <update id="updateHero" parameterType="HeroDTO">
+    UPDATE hero
+    SET
+      name = #{name},
+      type_idx = #{typeIdx}
+    WHERE
+      idx = #{idx}
+  </update>
+  
+  <update id="deleteHero" parameterType="int">
+    UPDATE hero
+    SET
+      disabled = 'Y'
+    WHERE
+      idx = #{idx}
+  </update>
+  
+  <select id="selectHeroListByUseridx" parameterType="int" resultType="HeroDTO">
+    SELECT
+      <include refid="heroColumns"/>
+    FROM
+      hero
+    WHERE
+      user_idx = #{userIdx}
+    AND
+      disabled = 'N'
+  </select>
+  
+  <resultMap id="HeroResultMap" type="HeroDTO">
+    <id column="idx" property="idx"/>
+    <result column="name" property="name"/>
+    <result column="user_idx" property="userIdx"/>
+    <result column="disabled" property="disabled"/>
+    <association property="heroTypeDTO" javaType="HeroTypeDTO">
+      <id column="type_idx" property="idx"/>
+      <result column="name_kr" property="nameKr"/>
+      <result column="name_en" property="nameEn"/>
+    </association>
+  </resultMap>
+  
+  <select id="selectHeroListAndHeroTypeByUseridx" parameterType="int" resultMap="HeroResultMap">
+    SELECT
+      *
+    FROM
+      hero h
+    INNER JOIN
+      hero_type t
+    ON
+      h.type_idx = t.idx
+    WHERE
+      h.user_idx = ${userIdx}
+  </select>
+  
+</mapper>
