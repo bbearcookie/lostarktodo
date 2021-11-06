@@ -4,10 +4,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import com.lostarktodo.domain.HeroDTO;
 import com.lostarktodo.mapper.HeroMapper;
 import com.lostarktodo.mapper.HeroTypeMapper;
 import com.lostarktodo.mapper.UserMapper;
+import com.lostarktodo.service.HeroService;
 
 @SpringBootTest
 public class MapperTests {
@@ -20,6 +24,9 @@ public class MapperTests {
 	
 	@Autowired
 	private HeroMapper heroMapper;
+	
+	@Autowired
+	private HeroService heroService;
 	
 //	@Test
 //	public void testOfInsert() {
@@ -103,9 +110,33 @@ public class MapperTests {
 //		}
 //	}
 	
+//	@Test
+//	public void testOfHeroSelect() {
+//		HeroDTO hero = heroMapper.selectHeroDetail(2);
+//		System.out.println(hero);
+//	}
+	
 	@Test
-	public void testOfHeroSelect() {
-		HeroDTO hero = heroMapper.selectHeroDetail(2);
-		System.out.println(hero);
+	public void testOfGson() {
+		HeroDTO params = heroService.getHero(1);
+		
+		ObjectMapper objMapper = new ObjectMapper();
+		
+		try {
+			String jsonInString = objMapper.writerWithDefaultPrettyPrinter().writeValueAsString(params);
+			System.out.println(jsonInString);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
+//		JsonObject jsonObject = new JsonObject();
+//		jsonObject.addProperty("idx", params.getIdx());
+//		jsonObject.addProperty("name", params.getName());
+//		jsonObject.addProperty("typeIdx", params.getTypeIdx());
+//		jsonObject.addProperty("userIdx", params.getUserIdx());
+//		jsonObject.addProperty("disabled", params.getDisabled());
+//		String jsonStr = gson.toJson(jsonObject);
+//		System.out.println(jsonStr);
+//		System.out.println(params);
 	}
 }

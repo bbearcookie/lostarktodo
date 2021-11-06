@@ -8,8 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lostarktodo.domain.HeroDTO;
 import com.lostarktodo.domain.UserDTO;
 import com.lostarktodo.service.HeroService;
@@ -23,9 +26,6 @@ public class HeroController {
 	
 	@PostMapping(value = "/hero/write")
 	public String createNewHero(@AuthenticationPrincipal UserDTO userResult, @ModelAttribute HeroDTO heroResult, Model model) {
-		
-		System.out.println(heroResult);
-		
 		URL url = new URL("redirect:/mainpage");
 		url.addQueryParam("name", heroResult.getName());
 		url.addQueryParam("typeIdx", String.valueOf(heroResult.getTypeIdx()));
@@ -41,7 +41,7 @@ public class HeroController {
 			return url.getResult();
 		}
 		
-		// 로직 처리 idx가 0이면 생성하고 아니면 수정한다.
+		// 로직 처리
 		heroResult.setUserIdx(userResult.getIdx());
 		heroService.registerHero(heroResult);
 		
@@ -52,11 +52,26 @@ public class HeroController {
 		return url.getResult();
 	}
 	
+	@PostMapping(value = "/hero/delete")
+	public String deleteHero(@AuthenticationPrincipal UserDTO userResult, @RequestParam String heroIdx, Model model) {
+		URL url = new URL("redirect:/mainpage");
+		
+		System.out.println("heroIdx: " + heroIdx);
+		
+		HeroDTO hero = heroService.getHero(Integer.parseInt(heroIdx));
+		
+		// TODO: 지우려는 캐릭터가 로그인한 유저의 것이 아니라면 실패
+		if (hero.getUserIdx() != userResult.getIdx()) {
+			
+		}
+		
+		return url.getResult();
+	}
+	
 	@ResponseBody
 	@GetMapping(value = "/hero/{heroIdx}")
 	public HeroDTO getHeroInfo(@PathVariable String heroIdx, Model model) {
 		HeroDTO params = heroService.getHero(Integer.parseInt(heroIdx));
-		
 		return params;
 	}
 }

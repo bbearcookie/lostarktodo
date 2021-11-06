@@ -89,6 +89,30 @@ layout:decorator="layout/basic">
 
       </form>
     </section>
+    
+
+    <!-- 캐릭터 삭제 모달 (Form은 무조건 object로 묶고 ) -->
+    <div class="modal fade" id="heroRemoveModal" tabindex="-1" aria-labelledby="heroRemoveModalLabel" aria-hidden="true">
+      <form class="modal-dialog modal-lg" th:action="@{/hero/delete}" method="post">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="heroRemoveModalLabel" style="font-weight: bold;">캐릭터 삭제</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <span class="heroName"></span>을(를) 정말로 삭제하시겠습니까?
+          </div>
+          <div class="modal-footer">
+            <!-- RequestParam으로 받을때 name 필드로 구분함. -->
+            <input type="hidden" name="heroIdx" class="heroIdxInput"/>
+            <button type="submit" class="btn btn-primary">예</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
 
     <!-- TODO: 스케줄 추가 및 수정 모달 -->
 
@@ -128,7 +152,7 @@ layout:decorator="layout/basic">
             <div class="row mb-3">
               <div class="col-12 btn-group">
                 <button type="button" th:value="${hero.idx}" class="btn btn-secondary" onclick="onClickHeroEditButton(this)">캐릭터 수정</button>
-                <button type="button" class="btn btn-danger">캐릭터 삭제</button>
+                <button type="button" th:value="${hero.idx}" class="btn btn-danger" onclick="onClickHeroRemoveButton(this)">캐릭터 삭제</button>
               </div>
             </div>
           </article>
@@ -149,6 +173,14 @@ layout:decorator="layout/basic">
     <script th:inline="javascript">
       /*<![CDATA[*/
 
+      // 특정 모달을 화면에 띄운다.
+      function openModal(modalId) {
+        const modal = new bootstrap.Modal(document.getElementById(modalId), {
+          keyboard: true
+        });
+        modal.show();
+      }
+
       // 캐릭터 편집 모달에서 캐릭터의 아이콘을 typeIdx에 맞는 직업의 아이콘으로 변경한다.
       function changeHeroIcon(typeIdx) {
         let heroIconEl = document.querySelector("#heroWriteModal .heroIcon");
@@ -167,7 +199,7 @@ layout:decorator="layout/basic">
         }
       }
 
-      // 캐릭터 편집 모달의 input 내용들을 hero의 내용으로 변경하고 모달을 띄움.
+      // 캐릭터 편집 모달의 input 내용들을 hero의 내용으로 변경함.
       function changeHeroWriterForm(hero) {
         // 아이콘 변경
         changeHeroIcon(hero.typeIdx);
@@ -181,12 +213,18 @@ layout:decorator="layout/basic">
         // 캐릭터명 변경
         let heroNameEl = document.querySelector("#heroNameInput");
         heroNameEl.value = hero.name;
+      }
 
-        // 모달 창 띄움.
-        const heroWriterModal = new bootstrap.Modal(document.querySelector('#heroWriteModal'), {
-          keyboard: true
-        });
-        heroWriterModal.show();
+      // 캐릭터 삭제 모달의 내용을 hero의 내용으로 변경함.
+      function changeHeroRemoveForm(hero) {
+        // heroIdx 변경
+        let heroIdxEl = document.querySelector("#heroRemoveModal .heroIdxInput");
+        heroIdxEl.value = hero.idx;
+        console.log(heroIdxEl.value);
+
+        // 캐릭터명 변경
+        let heroNameEl = document.querySelector("#heroRemoveModal .heroName");
+        heroNameEl.innerText = hero.name;
       }
 
       /*]]>*/
@@ -204,24 +242,6 @@ layout:decorator="layout/basic">
           didNotTypeHeroname.style.display = "none";
       }
 
-      // 캐릭터 수정 버튼 눌렀을때
-      function onClickHeroEditButton(e) {
-        let url = /*[[ @{/hero} ]]*/ null;
-        url += "/" + e.value; // heroIdx 값임.
-
-        // 해당 캐릭터의 정보를 비동기 방식으로 서버에서 가져옴
-        axios.get(url)
-             .then(function (res) {
-               if (res.status === 200) {
-                changeHeroWriterForm(res.data);
-               } else {
-                 console.log(res.status + ": " + res.statusText);
-               }
-             }).catch(function (err) {
-              console.log(err);
-             });
-      }
-
       // 캐릭터 추가 버튼 눌렀을 때
       function onClickHeroAddButton() {
         // 직업 아이콘 초기화
@@ -236,6 +256,41 @@ layout:decorator="layout/basic">
 
         // 캐릭터명 input의 값 초기화
         document.querySelector("#heroWriteModal #heroNameInput").value = "";
+      }
+
+      // 캐릭터 수정 버튼 눌렀을때
+      function onClickHeroEditButton(e) {
+        let url = /*[[ @{/hero} ]]*/ null;
+        url += "/" + e.value; // heroIdx 값임.
+
+        // 해당 캐릭터의 정보를 비동기 방식으로 서버에서 가져옴
+        axios.get(url).then(function (res) {
+          if (res.status === 200) {
+            changeHeroWriterForm(res.data);
+            openModal("heroWriteModal");
+          } else {
+            console.log(res.status + ": " + res.statusText);
+          }
+        }).catch(function (err) {
+          console.log(err);
+        });
+      }
+
+      // 캐릭터 삭제 버튼 눌렀을때
+      function onClickHeroRemoveButton(e) {
+        let url = /*[[ @{/hero} ]]*/ null;
+        url += "/" + e.value; // heroIdx 값임.
+
+        axios.get(url).then(function (res) {
+          if (res.status === 200) {
+            changeHeroRemoveForm(res.data);
+            openModal("heroRemoveModal");
+          } else {
+            console.log(res.status + ": " + res.statusText);
+          }
+        }).catch(function (err) {
+          console.log(err);
+        });
       }
 
       // 화면 로드 됐을때

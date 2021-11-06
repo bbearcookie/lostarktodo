@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.lostarktodo.domain.HeroDTO;
 import com.lostarktodo.domain.HeroTypeDTO;
 import com.lostarktodo.domain.UserDTO;
@@ -29,7 +31,7 @@ public class MainpageController {
 	@GetMapping(value = "/mainpage")
 	public String loginSuccess(@AuthenticationPrincipal UserDTO user,
 							   @ModelAttribute HeroDTO heroWriteParams,
-							   @RequestParam(value="error", required=false) String error, 
+							   @RequestParam(value="error", required=false) String error,
 							   Model model) {
 		
 		// 캐릭터 생성 모달 안에서 사용되는 값임.
@@ -43,7 +45,7 @@ public class MainpageController {
 		
 		List<HeroDTO> possesedHeroList = heroService.selectHeroListAndHeroTypeByUseridx(user.getIdx());
 		
-		// TODO: hero list도 모델에 담아서 보내줘야함.
+		// 모델에 담아서 보내줌.
 		model.addAttribute("heroList", possesedHeroList);
 		model.addAttribute("heroWriteParams", heroWriteParams);
 		model.addAttribute("error", error);
