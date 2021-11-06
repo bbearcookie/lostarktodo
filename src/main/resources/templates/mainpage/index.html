@@ -10,7 +10,7 @@ layout:decorator="layout/basic">
   </th:block>
 
   <th:block layout:fragment="title">
-    <title>This is a hello page!!!!</title>
+    <title>Lostark Todo</title>
   </th:block>
 
   <th:block layout:fragment="navbar">
@@ -48,7 +48,7 @@ layout:decorator="layout/basic">
             <div class="col-3">
               <div style="color: gray;">직업</div>
 
-              <select th:field="*{typeIdx}" class="form-select" aria-label="heroSelect" onchange="onHeroSelectChange(this)">
+              <select th:field="*{typeIdx}" class="form-select" aria-label="heroSelect" onchange="changeHeroIcon(this.value)">
                 <option value="0" selected>선택</option>
                 <option th:each="heroType: ${heroTypeList}" th:value="${heroType.idx}" th:text="${heroType.nameKr}">
               </select>
@@ -56,13 +56,23 @@ layout:decorator="layout/basic">
   
             <div class="col-8">
               <div style="color: gray;">캐릭터명</div>
-              <input type="text" th:field="*{name}" class="heroName form-control" placeholder="캐릭터명을 입력해주세요." maxlength="12"/>
+              <input type="text" th:field="*{name}" th:value="*{name}" class="heroName form-control" placeholder="캐릭터명을 입력해주세요." maxlength="12" onchange="onChangeheroNameInput()"/>
             </div>
           </div>
   
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-            <button type="submit" class="btn btn-primary">저장</button>
+          <div class="modal-footer d-flex flex-column align-items-end">
+            <div id="didNotSelectHerotype" th:if="${error} == 'didNotSelectHerotype'" class="alert alert-danger" role="alert">
+              직업을 선택해주세요.
+            </div>
+
+            <div id="didNotTypeHeroname" th:if="${error} == 'didNotTypeHeroname'" class="alert alert-danger" role="alert">
+              캐릭터명을 입력해주세요.
+            </div>
+
+            <div>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+              <button type="submit" class="btn btn-primary">저장</button>
+            </div>
           </div>
         </div>
 
@@ -78,7 +88,7 @@ layout:decorator="layout/basic">
       <section class="container-lg">
         <div class="hero-label">
           <h5 class="ps-2 pt-3" style="font-weight: bold;">캐릭터</h5>
-          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#heroWriteModal" onclick="onOpenHeroWriteModal()">추가</button>
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#heroWriteModal">추가</button>
         </div>
         <hr/>
 
@@ -122,29 +132,50 @@ layout:decorator="layout/basic">
     <script th:inline="javascript">
       /*<![CDATA[*/
 
-      // 캐릭터 추가 및 수정 모달에서 사용되는 함수. 직업 선택 select의 값이 바뀔 때마다 아이콘을 변경해준다.
-      function onHeroSelectChange(e) {
+      // 캐릭터 추가 및 수정 모달에서 캐릭터의 아이콘을 typeIdx에 맞는 직업의 아이콘으로 변경한다.
+      function changeHeroIcon(typeIdx) {
         let heroIconEl = document.querySelector("#heroWriteModal .heroIcon");
         let heroTypeList = /*[[ ${heroTypeList} ]]*/ null;
-        if (e.value > 0) {
-          let heroType = heroTypeList[e.value - 1];
+
+        if (typeIdx > 0) {
+          let heroType = heroTypeList[typeIdx - 1];
           heroIconEl.setAttribute("src", "/icon/hero/normal/" + heroType.nameEn + ".png");
+          
+          // 직업을 선택했으니 직업을 선택해달라는 alert이 있으면 안보이도록 함.
+          let didNotSelectHerotype = document.querySelector("#didNotSelectHerotype");
+          if (didNotSelectHerotype)
+            didNotSelectHerotype.style.display = "none";
         } else {
           heroIconEl.setAttribute("src", "/icon/hero/default.png");
         }
       }
 
-      // 캐릭터 추가 및 수정 모달을 열 때마다 input 값들 초기화
-      function onOpenHeroWriteModal() {
-        // 직업 아이콘 초기화
-        let heroIconEl = document.querySelector("#heroWriteModal .heroIcon");
-        heroIconEl.setAttribute("src", "/icon/hero/default.png");
+      // 캐릭터명 input태그 수정시 캐릭터명 입력하라는 alert이 있으면 안보이도록 함.
+      function onChangeheroNameInput() {
+        let didNotTypeHeroname = document.querySelector("#didNotTypeHeroname");
+          if (didNotTypeHeroname)
+            didNotTypeHeroname.style.display = "none";
+      }
 
-        // 직업 선택 select의 값 초기화
-        document.querySelector("#heroWriteModal select").value = 0;
+      // 화면 로드시
+      window.onload = function() {
 
-        // 캐릭터명 input의 값 초기화
-        document.querySelector("#heroWriteModal .heroName").value = "";
+        // 캐릭터 추가 및 수정 모달 캐릭터 아이콘 설정
+        const heroParams = /*[[ ${heroParams} ]]*/ null;
+        changeHeroIcon(heroParams.typeIdx);
+
+        // 캐릭터 추가 및 수정 모달 폼에서 POST 요청후 리다이렉션 했는데
+        // 유효성 검증에 실패했을 경우 사용자가 수정할 수 있게 다시 모달을 띄어줌.
+        const error = /*[[ ${error} ]]*/ null;
+        if (error) {
+          if (error.includes("didNotTypeHeroname") || error.includes("didNotSelectHerotype")) {
+            const heroWriterModal = new bootstrap.Modal(document.querySelector('#heroWriteModal'), {
+              keyboard: true
+            });
+
+            heroWriterModal.show();
+          }
+        }
       }
 
       /*]]>*/
