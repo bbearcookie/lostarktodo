@@ -30,6 +30,15 @@
       idx = #{idx}
   </update>
   
+  <select id="selectHeroDetail" parameterType="int" resultType="HeroDTO">
+    SELECT
+      <include refid="heroColumns"/>
+    FROM
+      hero
+    WHERE
+      idx = #{idx}
+  </select>
+  
   <update id="deleteHero" parameterType="int">
     UPDATE hero
     SET

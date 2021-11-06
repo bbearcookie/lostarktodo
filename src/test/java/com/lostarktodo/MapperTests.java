@@ -1,7 +1,5 @@
 package com.lostarktodo;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -106,11 +104,8 @@ public class MapperTests {
 //	}
 	
 	@Test
-	public void testOfJoin() {
-		List<HeroDTO> list = heroMapper.selectHeroListAndHeroTypeByUseridx(1);
-
-		for (HeroDTO e : list) {
-			System.out.println(e.toString());
-		}
+	public void testOfHeroSelect() {
+		HeroDTO hero = heroMapper.selectHeroDetail(2);
+		System.out.println(hero);
 	}
 }

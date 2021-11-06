@@ -7,6 +7,7 @@ import com.lostarktodo.domain.HeroDTO;
 @Mapper
 public interface HeroMapper {
 	public int insertHero(HeroDTO params);
+	public HeroDTO selectHeroDetail(int idx);
 	public int updateHero(HeroDTO params);
 	public int deleteHero(int idx);
 	public List<HeroDTO> selectHeroListByUseridx(int userIdx);

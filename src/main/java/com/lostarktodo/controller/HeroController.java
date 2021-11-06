@@ -6,7 +6,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.lostarktodo.domain.HeroDTO;
 import com.lostarktodo.domain.UserDTO;
@@ -21,6 +23,9 @@ public class HeroController {
 	
 	@PostMapping(value = "/hero/write")
 	public String createNewHero(@AuthenticationPrincipal UserDTO userResult, @ModelAttribute HeroDTO heroResult, Model model) {
+		
+		System.out.println(heroResult);
+		
 		URL url = new URL("redirect:/mainpage");
 		url.addQueryParam("name", heroResult.getName());
 		url.addQueryParam("typeIdx", String.valueOf(heroResult.getTypeIdx()));
@@ -36,14 +41,22 @@ public class HeroController {
 			return url.getResult();
 		}
 		
-		// 로직 처리
+		// 로직 처리 idx가 0이면 생성하고 아니면 수정한다.
 		heroResult.setUserIdx(userResult.getIdx());
-		heroService.createHero(heroResult);
+		heroService.registerHero(heroResult);
 		
 		// 캐릭터 생성 모달 폼 내용 초기화
 		url.removeQueryParam("name");
 		url.removeQueryParam("typeIdx");
 		
 		return url.getResult();
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "/hero/{heroIdx}")
+	public HeroDTO getHeroInfo(@PathVariable String heroIdx, Model model) {
+		HeroDTO params = heroService.getHero(Integer.parseInt(heroIdx));
+		
+		return params;
 	}
 }
