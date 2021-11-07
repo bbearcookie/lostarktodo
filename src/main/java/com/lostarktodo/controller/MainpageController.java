@@ -50,6 +50,6 @@ public class MainpageController {
 		model.addAttribute("heroWriteParams", heroWriteParams);
 		model.addAttribute("error", error);
 		
-		return "mainpage/index";
+		return "pages/mainpage/index";
 	}
 }

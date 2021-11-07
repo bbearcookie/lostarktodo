@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/account/login", "/account/register", "/hello").permitAll() // 이 경로들은 권한이 없어도 모두가 접근할 수 있게끔 함.
+				.antMatchers("/account/login", "/account/register", "/hello", "/test").permitAll() // 이 경로들은 권한이 없어도 모두가 접근할 수 있게끔 함.
 				.anyRequest().authenticated() // 그 외의 페이지는 인증(로그인)이 되어있어야 접근가능.
 				.and()
 			.formLogin()

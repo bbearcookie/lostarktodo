@@ -18,4 +18,9 @@ public class TestController {
 	public String helloWorld(Model model) {
 		return "test/hello";
 	}
+	
+	@GetMapping(value = "/test")
+	public String testWorld(Model model) {
+		return "pages/mainpage/index";
+	}
 }

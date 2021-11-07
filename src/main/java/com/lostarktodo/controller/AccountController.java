@@ -20,7 +20,7 @@ public class AccountController {
 
 	@GetMapping(value = "/account/login")
 	public String openAccountLogin(Model model) {
-		return "account/login";
+		return "pages/account/login";
 	}
 	
 	@GetMapping(value = "/account/register")
@@ -30,7 +30,7 @@ public class AccountController {
 		params.setUsername("");
 		params.setPassword("");
 		model.addAttribute("params", params);
-		return "account/register";
+		return "pages/account/register";
 	}
 
 	@PostMapping(value = "/account/login/success")
@@ -46,26 +46,26 @@ public class AccountController {
 		// 유효성 검사
 		if (params.getUsername() == "" || params.getUsername() == null) {
 			model.addAttribute("didNotTypeUsername", true);
-			return "account/login";
+			return "pages/account/login";
 		}
 		if (params.getPassword() == "" || params.getPassword() == null) {
 			model.addAttribute("didNotTypePassword", true);
-			return "account/login";
+			return "pages/account/login";
 		}
 		
 		// 존재하는 아이디인지 확인
 		if (!accountService.checkWhetherExistUsername(params.getUsername())) {
 			model.addAttribute("didNotExistUsername", true);
-			return "account/login";
+			return "pages/account/login";
 		}
 		
 		// 비밀번호가 일치한지 확인
 		if (!accountService.checkWhetherSamePassword(params)) {
 			model.addAttribute("didNotCorrectPassword", true);
-			return "account/login";
+			return "pages/account/login";
 		}
 		
-		return "account/login";
+		return "pages/account/login";
 	}
 	
 	@PostMapping(value = "/account/register")
@@ -75,19 +75,19 @@ public class AccountController {
 		// 유효성 검사
 		if (params.getUsername() == "" || params.getUsername() == null) {
 			model.addAttribute("didNotTypeUsername", true);
-			return "account/register";
+			return "pages/account/register";
 		}
 		if (params.getPassword() == "" || params.getPassword() == null) {
 			model.addAttribute("didNotTypePassword", true);
-			return "account/register";
+			return "pages/account/register";
 		}
 		
 		// 새로운 유저 등록
 		if (accountService.registerUser(params)) {
-			return "account/login";
+			return "pages/account/login";
 		} else {
 			model.addAttribute("alreadyExistUsername", true);
-			return "account/register";
+			return "pages/account/register";
 		}
 	}
 	

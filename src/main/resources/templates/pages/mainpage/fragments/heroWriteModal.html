@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+  <!-- 캐릭터 추가 및 수정 모달 -->
+  <section th:fragment="wrapper" class="modal fade" id="heroWriteModal" tabindex="-1" aria-labelledby="heroWriteModal" aria-hidden="true">
+    <form class="modal-dialog modal-lg" th:action="@{/hero/write}" th:object="${heroWriteParams}" method="post">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="heroWriteModalLabel" style="font-weight: bold;">캐릭터 정보</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="row modal-body">
+          <div class="col-1 d-flex align-items-center">
+            <img
+              width="65px"
+              height="65px"
+              src="/icon/hero/default.png"
+              class="heroIcon img-fluid rounded-start"
+              alt="캐릭터 아이콘"
+            />
+          </div>
+
+          <div class="col-3">
+            <div style="color: gray;">직업</div>
+
+            <select th:field="*{typeIdx}" class="form-select" aria-label="heroSelect" onchange="changeHeroIcon(this.value)">
+              <option value="0" selected>선택</option>
+              <option th:each="heroType: ${heroTypeList}" th:value="${heroType.idx}" th:text="${heroType.nameKr}">
+            </select>
+          </div>
+
+          <div class="col-8">
+            <div style="color: gray;">캐릭터명</div>
+            <input
+              type="text"
+              th:field="*{name}"
+              th:value="*{name}"
+              class="form-control"
+              id="heroNameInput"
+              placeholder="캐릭터명을 입력해주세요."
+              maxlength="12"
+              onchange="onChangeheroNameInput()"
+            />
+          </div>
+        </div>
+
+        <div class="modal-footer d-flex flex-column align-items-end">
+          <div id="didNotSelectHerotype" th:if="${error} == 'didNotSelectHerotype'" class="alert alert-danger" role="alert">
+            직업을 선택해주세요.
+          </div>
+
+          <div id="didNotTypeHeroname" th:if="${error} == 'didNotTypeHeroname'" class="alert alert-danger" role="alert">
+            캐릭터명을 입력해주세요.
+          </div>
+
+          <div>
+            <input type="hidden" th:field="*{idx}" th:value="*{idx}" id="heroIdxInput"/>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+            <button type="submit" class="btn btn-primary">저장</button>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </section>
+
+</html>

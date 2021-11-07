@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+  <!-- 캐릭터 삭제 모달 (Form은 무조건 object로 묶어서 컨트롤러에서 DTO클래스로 받거나, 아니면 name 필드와 RequestParam 애노테이션으로 따로따로 받거나 둘 중 한가지 방법을 써야하는듯하다.) -->
+  <section th:fragment="wrapper" class="modal fade" id="heroRemoveModal" tabindex="-1" aria-labelledby="heroRemoveModalLabel" aria-hidden="true">
+    <form class="modal-dialog modal-lg" th:action="@{/hero/delete}" method="post">
+
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="heroRemoveModalLabel" style="font-weight: bold;">캐릭터 삭제</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+          <span class="heroName"></span>을(를) 정말로 삭제하시겠습니까?
+        </div>
+
+        <div class="modal-footer">
+          <!-- RequestParam으로 받을때 name 필드로 구분함. -->
+          <input type="hidden" name="heroIdx" class="heroIdxInput"/>
+          <button type="submit" class="btn btn-primary">예</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+        </div>
+        
+      </div>
+    </form>
+  </section>
+
+
+</html>

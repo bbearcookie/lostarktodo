@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="/layout/basic.html :: head"></div>
+    <title>LostarkTodo</title>
+    <link th:href="@{/css/mainpage/index.css}" rel="stylesheet">
+  </head>
+  <body>
+    <div th:replace="/pages/mainpage/fragments/heroWriteModal.html :: wrapper"></div>
+    <div th:replace="/pages/mainpage/fragments/heroRemoveModal.html :: wrapper"></div>
+    <div th:replace="/pages/mainpage/fragments/navigationBar.html :: wrapper"></div>
+    <div th:replace="/pages/mainpage/fragments/contents.html :: wrapper"></div>
+    <div th:replace="/pages/mainpage/fragments/footer.html :: wrapper"></div>
+
+    <div th:replace="/layout/basic.html :: body"></div>
+    <div th:replace="/pages/mainpage/fragments/scripts/script.html :: wrapper"></div>
+    <div th:replace="/pages/mainpage/fragments/scripts/eventscript.html :: wrapper"></div>
+  </body>
+</html>

@@ -1,15 +1,11 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/basic">
-
-  <th:block layout:fragment="style">
-    <link th:href="@{/css/account/login.css}" rel="stylesheet">
-  </th:block>
-
-  <th:block layout:fragment="title">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="/layout/basic.html :: head"></div>
     <title>로그인</title>
-  </th:block>
-
-  <th:block layout:fragment="body">
+    <link th:href="@{/css/account/login.css}" rel="stylesheet">
+  </head>
+  <body>
     <main class="form-signin text-center">
       <form th:action="@{/account/login}" method="post">
         <img class="mb-4" src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
@@ -54,5 +50,7 @@
         <p class="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
       </form>
     </main>
-  </th:block>
+
+    <div th:replace="/layout/basic.html :: body"></div>
+  </body>
 </html>

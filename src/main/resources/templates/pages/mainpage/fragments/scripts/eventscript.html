@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <script th:fragment="wrapper" th:inline="javascript">
+    /*<![CDATA[*/
+
+    // 캐릭터명 input태그 수정시 캐릭터명 입력하라는 alert이 있으면 안보이도록 함.
+    function onChangeheroNameInput() {
+      let didNotTypeHeroname = document.querySelector("#didNotTypeHeroname");
+      if (didNotTypeHeroname)
+        didNotTypeHeroname.style.display = "none";
+    }
+
+    // 캐릭터 추가 버튼 눌렀을 때
+    function onClickHeroAddButton() {
+      // 직업 아이콘 초기화
+      let heroIconEl = document.querySelector("#heroWriteModal .heroIcon");
+      heroIconEl.setAttribute("src", "/icon/hero/default.png");
+
+      // heroIdx 값 초기화
+      document.querySelector("#heroIdxInput").value = 0;
+
+      // 직업 선택 select의 값 초기화
+      document.querySelector("#heroWriteModal select").value = 0;
+
+      // 캐릭터명 input의 값 초기화
+      document.querySelector("#heroWriteModal #heroNameInput").value = "";
+    }
+
+    // 캐릭터 수정 버튼 눌렀을때
+    function onClickHeroEditButton(e) {
+      let url = /*[[ @{/hero} ]]*/ null;
+      url += "/" + e.value; // heroIdx 값임.
+
+      // 해당 캐릭터의 정보를 비동기 방식으로 서버에서 가져옴
+      axios.get(url).then(function (res) {
+        if (res.status === 200) {
+          changeHeroWriterForm(res.data);
+          openModal("heroWriteModal");
+        } else {
+          console.log(res.status + ": " + res.statusText);
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+
+    // 캐릭터 삭제 버튼 눌렀을때
+    function onClickHeroRemoveButton(e) {
+      let url = /*[[ @{/hero} ]]*/ null;
+      url += "/" + e.value; // heroIdx 값임.
+
+      axios.get(url).then(function (res) {
+        if (res.status === 200) {
+          changeHeroRemoveForm(res.data);
+          openModal("heroRemoveModal");
+        } else {
+          console.log(res.status + ": " + res.statusText);
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+
+    // 화면 로드 됐을때
+    window.onload = function() {
+      // 캐릭터 편집 모달 폼의 캐릭터 아이콘 설정
+      const heroWriteParams = /*[[ ${heroWriteParams} ]]*/ null;
+      changeHeroIcon(heroWriteParams.typeIdx);
+
+      // 캐릭터 편집 모달 폼에서 POST 요청후 리다이렉션 했는데
+      // 유효성 검증에 실패하여 재입력 받아야하는 경우
+      // 사용자가 수정할 수 있게 다시 모달을 띄어줌.
+      const error = /*[[ ${error} ]]*/ null;
+      if (error) {
+        if (error.includes("didNotTypeHeroname") || error.includes("didNotSelectHerotype")) {
+          const heroWriterModal = new bootstrap.Modal(document.querySelector('#heroWriteModal'), {
+            keyboard: true
+          });
+
+          heroWriterModal.show();
+        }
+      }
+    }
+
+    /*]]>*/
+  </script>
+</html>

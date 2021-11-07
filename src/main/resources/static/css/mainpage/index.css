@@ -4,12 +4,12 @@ html, body {
 
 main {
   background-color: #F5F5F5;
-  height: 85%;
+  min-height: 83%;
   font-size: 14px;
 }
 
 footer {
-  height: 150px;
+  height: 107px;
   color: white;
   background-color: #323232;
 }

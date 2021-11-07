@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <script th:fragment="wrapper" th:inline="javascript">
+    /*<![CDATA[*/
+
+    // 특정 모달을 화면에 띄운다.
+    function openModal(modalId) {
+      const modal = new bootstrap.Modal(document.getElementById(modalId), {
+        keyboard: true
+      });
+      modal.show();
+    }
+
+    // 캐릭터 편집 모달에서 캐릭터의 아이콘을 typeIdx에 맞는 직업의 아이콘으로 변경한다.
+    function changeHeroIcon(typeIdx) {
+      let heroIconEl = document.querySelector("#heroWriteModal .heroIcon");
+      let heroTypeList = /*[[ ${heroTypeList} ]]*/ null;
+
+      if (typeIdx > 0) {
+        let heroType = heroTypeList[typeIdx - 1];
+        heroIconEl.setAttribute("src", "/icon/hero/normal/" + heroType.nameEn + ".png");
+        
+        // 직업을 선택했으니 직업을 선택해달라는 alert이 있으면 안보이도록 함.
+        let didNotSelectHerotype = document.querySelector("#didNotSelectHerotype");
+        if (didNotSelectHerotype)
+          didNotSelectHerotype.style.display = "none";
+      } else {
+        heroIconEl.setAttribute("src", "/icon/hero/default.png");
+      }
+    }
+
+    // 캐릭터 편집 모달의 input 내용들을 hero의 내용으로 변경함.
+    function changeHeroWriterForm(hero) {
+      // 아이콘 변경
+      changeHeroIcon(hero.typeIdx);
+
+      // heroIdx 변경
+      document.querySelector("#heroIdxInput").value = hero.idx;
+
+      // 직업 변경
+      document.querySelector("#heroWriteModal select").value = hero.typeIdx;
+
+      // 캐릭터명 변경
+      let heroNameEl = document.querySelector("#heroNameInput");
+      heroNameEl.value = hero.name;
+    }
+
+    // 캐릭터 삭제 모달의 내용을 hero의 내용으로 변경함.
+    function changeHeroRemoveForm(hero) {
+      // heroIdx 변경
+      let heroIdxEl = document.querySelector("#heroRemoveModal .heroIdxInput");
+      heroIdxEl.value = hero.idx;
+      console.log(heroIdxEl.value);
+
+      // 캐릭터명 변경
+      let heroNameEl = document.querySelector("#heroRemoveModal .heroName");
+      heroNameEl.innerText = hero.name;
+    }
+
+    /*]]>*/
+  </script>
+</html>
