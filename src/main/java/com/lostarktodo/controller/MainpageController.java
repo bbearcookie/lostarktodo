@@ -17,6 +17,7 @@ import com.lostarktodo.domain.ScheduleTypeDTO;
 import com.lostarktodo.domain.UserDTO;
 import com.lostarktodo.service.HeroService;
 import com.lostarktodo.service.HeroTypeService;
+import com.lostarktodo.service.ScheduleService;
 import com.lostarktodo.service.ScheduleTypeService;
 
 @Controller
@@ -27,6 +28,9 @@ public class MainpageController {
 	
 	@Autowired
 	private HeroTypeService heroTypeService;
+	
+	@Autowired
+	private ScheduleService scheduleService;
 	
 	@Autowired
 	private ScheduleTypeService scheduleTypeService;
@@ -53,6 +57,15 @@ public class MainpageController {
 		
 		// 해당 유저가 가지고 있는 모든 캐릭터들
 		List<HeroDTO> possesedHeroList = heroService.selectHeroListAndHeroTypeByUseridx(user.getIdx());
+		model.addAttribute("heroList", possesedHeroList);
+		
+		// 해당 캐릭터가 가지고 있는 일간 주간 스케줄들
+		if (watchingHeroIdx != null) {
+			List<ScheduleDTO> possesedDailyScheduleList = scheduleService.selectDailyScheduleListAndScheduleTypeByHeroidx(Integer.parseInt(watchingHeroIdx));
+			List<ScheduleDTO> possesedWeeklyScheduleList = scheduleService.selectWeeklyScheduleListAndScheduleTypeByHeroidx(Integer.parseInt(watchingHeroIdx));
+			model.addAttribute("dailyScheduleList", possesedDailyScheduleList);
+			model.addAttribute("weeklyScheduleList", possesedWeeklyScheduleList);
+		}
 		
 		// 스케줄 조회 기능에서 사용되는 값임. ==========================================
 		// watchingHeroIdx 값이 있는 경우에만 모델에 담아서 보내줌. (사용자가 해당 캐릭터에 대해 스케줄 조회를 요청했을때 생김.)
@@ -60,8 +73,7 @@ public class MainpageController {
 			model.addAttribute("watchingHeroIdx", watchingHeroIdx);
 		}
 		
-		// 모델에 담아서 보내줌.  =======================================
-		model.addAttribute("heroList", possesedHeroList);
+		// 모델에 담아서 보내줌.  ===================================================
 		model.addAttribute("heroWriteParams", heroWriteParams);
 		model.addAttribute("scheduleWriteParams", scheduleWriteParams);
 		model.addAttribute("error", error);

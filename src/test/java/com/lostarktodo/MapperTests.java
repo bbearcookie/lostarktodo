@@ -164,7 +164,7 @@ public class MapperTests {
 //		params.setCompleteCount(0);
 //		params.setMaxCompleteCount(2);
 //		params.setTypeIdx(1);
-//		params.setHeroIdx(1);
+//		params.setHeroIdx(2);
 //		
 //		scheduleMapper.insertSchedule(params);
 //	}
@@ -189,9 +189,15 @@ public class MapperTests {
 //		System.out.println(list);
 //	}
 	
+//	@Test
+//	public void testOfSeekWeeklySchedule() {
+//		List<ScheduleDTO> list = scheduleMapper.selectWeeklyScheduleListByHeroidx(1);
+//		System.out.println(list);
+//	}
+	
 	@Test
-	public void testOfSeekWeeklySchedule() {
-		List<ScheduleDTO> list = scheduleMapper.selectWeeklyScheduleListByHeroidx(1);
+	public void testOfSelectDailyScheduleListAndScheduleTypeByHeroidx() {
+		List<ScheduleDTO> list = scheduleMapper.selectWeeklyScheduleListAndScheduleTypeByHeroidx(2);
 		System.out.println(list);
 	}
 }

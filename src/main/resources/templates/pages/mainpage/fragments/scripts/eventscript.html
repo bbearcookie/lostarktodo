@@ -76,8 +76,7 @@
 
     // 일간 스케줄 추가 버튼 눌렀을때
     function onClickDailyScheduleButton() {
-      let inputEl = document.querySelector('#dailyScheduleWriteModal .schedulePeriodInput');
-      inputEl.value = "D";
+      setSchedulePeriod();
     }
 
     // 스케줄 아이콘 목록에서 원하는 아이콘 눌렀을때
@@ -97,6 +96,8 @@
 
     // 화면 로드 됐을때
     window.onload = function() {
+      const error = /*[[ ${error} ]]*/ null;
+
       // 캐릭터 편집 모달 폼의 캐릭터 아이콘 설정
       const heroWriteParams = /*[[ ${heroWriteParams} ]]*/ null;
       changeHeroIcon(heroWriteParams.typeIdx);
@@ -104,14 +105,32 @@
       // 캐릭터 편집 모달 폼에서 POST 요청후 리다이렉션 했는데
       // 유효성 검증에 실패하여 재입력 받아야하는 경우
       // 사용자가 수정할 수 있게 다시 모달을 띄어줌.
-      const error = /*[[ ${error} ]]*/ null;
       if (error) {
         if (error.includes("didNotTypeHeroname") || error.includes("didNotSelectHerotype")) {
-          const heroWriterModal = new bootstrap.Modal(document.querySelector('#heroWriteModal'), {
+          const modal = new bootstrap.Modal(document.querySelector('#heroWriteModal'), {
             keyboard: true
           });
 
-          heroWriterModal.show();
+          modal.show();
+        }
+      }
+
+      // 일간 스케줄 모달 폼의 캐릭터 아이콘 설정
+      const scheduleWriteParams = /*[[ ${scheduleWriteParams} ]]*/ null;
+      changeDailyScheduleIcon(scheduleWriteParams.typeIdx);
+      setSchedulePeriod();
+
+      // 스케줄 편집 모달 폼에서 POST 요청후 리다이렉션 했는데
+      // 유효성 검증에 실패하여 재입력 받아야하는 경우
+      // 사용자가 수정할 수 있게 다시 모달을 띄어줌.
+      if (error) {
+        if (error.includes("didNotSelectScheduleIcon") || error.includes("didNotTypeSchedulename")) {
+
+          const modal = new bootstrap.Modal(document.querySelector('#dailyScheduleWriteModal'), {
+            keyboard: true
+          });
+
+          modal.show();
         }
       }
     }

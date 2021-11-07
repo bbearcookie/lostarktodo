@@ -22,12 +22,25 @@
         
         // 직업을 선택했으니 직업을 선택해달라는 alert이 있으면 안보이도록 함.
         let didNotSelectHerotype = document.querySelector("#didNotSelectHerotype");
-        if (didNotSelectHerotype)
-          didNotSelectHerotype.style.display = "none";
+        if (didNotSelectHerotype) didNotSelectHerotype.style.display = "none";
+
       } else {
         heroIconEl.setAttribute("src", "/icon/hero/default.png");
       }
 
+    }
+
+    // 일간 스케줄 모달에서 캐릭터의 아이콘을 typeIdx에 맞는 직업의 아이콘으로 변경한다.
+    function changeDailyScheduleIcon(typeIdx) {
+      let iconEl = document.querySelector("#dailyScheduleWriteModal .icon-area img");
+      let scheduleTypeList = /*[[ ${scheduleTypeList} ]]*/ null;
+
+      if (typeIdx > 0) {
+        let scheduleType = scheduleTypeList[typeIdx - 1];
+        iconEl.setAttribute("src", "/icon/schedule/" + scheduleType.nameEn + ".png");
+      } else {
+        iconEl.setAttribute("src", "/icon/hero/default.png");
+      }
     }
 
     // 캐릭터 편집 모달의 input 내용들을 hero의 내용으로 변경함.
@@ -68,17 +81,10 @@
       }
     }
 
-    // 일간 스케줄 모달에서 캐릭터의 아이콘을 typeIdx에 맞는 직업의 아이콘으로 변경한다.
-    function changeDailyScheduleIcon(typeIdx) {
-      let iconEl = document.querySelector("#dailyScheduleWriteModal .icon-area img");
-      let scheduleTypeList = /*[[ ${scheduleTypeList} ]]*/ null;
-
-      if (typeIdx > 0) {
-        let scheduleType = scheduleTypeList[typeIdx - 1];
-        iconEl.setAttribute("src", "/icon/schedule/" + scheduleType.nameEn + ".png");
-      } else {
-        heroIconEl.setAttribute("src", "/icon/hero/default.png");
-      }
+    // 일간 스케줄 편집 모달과 주간 스케줄 편집 모달에서 period를 나타내는 input값을 각각 d, w로 변경함.
+    function setSchedulePeriod() {
+      const periodEl = document.querySelector("#dailyScheduleWriteModal .schedulePeriodInput");
+      periodEl.value = "D";
     }
 
     /*]]>*/

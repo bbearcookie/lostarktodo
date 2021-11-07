@@ -91,4 +91,55 @@
       idx
   </select>
   
+  <resultMap id="ScheduleResultMap" type="ScheduleDTO">
+    <id column="idx" property="idx"/>
+    <result column="name" property="name"/>
+    <result column="period" property="period"/>
+    <result column="resting_gauge" property="restingGauge"/>
+    <result column="max_resting_gauge" property="maxRestingGauge"/>
+    <result column="complete_count" property="completeCount"/>
+    <result column="max_complete_count" property="maxCompleteCount"/>
+    <result column="hero_idx" property="heroIdx"/>
+    <result column="disabled" property="disabled"/>
+    <association property="scheduleTypeDTO" javaType="ScheduleTypeDTO">
+    	<id column="type_idx" property="idx"/>
+    	<result column="name_kr" property="nameKr"/>
+    	<result column="name_en" property="nameEn"/>
+    </association>
+  </resultMap>
+  
+  <select id="selectDailyScheduleListAndScheduleTypeByHeroidx" parameterType="int" resultMap="ScheduleResultMap">
+    SELECT
+      *
+    FROM
+      schedule s
+    INNER JOIN
+      schedule_type t
+    ON
+      s.type_idx = t.idx
+    WHERE
+      s.hero_idx = ${heroIdx}
+    AND
+      period = "D"
+    ORDER BY
+      s.idx
+  </select>
+  
+  <select id="selectWeeklyScheduleListAndScheduleTypeByHeroidx" parameterType="int" resultMap="ScheduleResultMap">
+    SELECT
+      *
+    FROM
+      schedule s
+    INNER JOIN
+      schedule_type t
+    ON
+      s.type_idx = t.idx
+    WHERE
+      s.hero_idx = ${heroIdx}
+    AND
+      period = "W"
+    ORDER BY
+      s.idx
+  </select>
+  
 </mapper>

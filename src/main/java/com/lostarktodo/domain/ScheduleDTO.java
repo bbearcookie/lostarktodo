@@ -12,6 +12,7 @@ public class ScheduleDTO {
 	private int maxCompleteCount; // 최대 수행 횟수
 	private int heroIdx; // HeroDTO의 idx를 가리키는 외래 키(FK)
 	private String disabled; // 스케줄 삭제 여부
+	private ScheduleTypeDTO scheduleTypeDTO; // ScheduleTypeDTO와 join
 	
 	public int getIdx() {
 		return idx;
@@ -73,14 +74,21 @@ public class ScheduleDTO {
 	public void setDisabled(String disabled) {
 		this.disabled = disabled;
 	}
+	public ScheduleTypeDTO getScheduleTypeDTO() {
+		return scheduleTypeDTO;
+	}
+	public void setScheduleTypeDTO(ScheduleTypeDTO scheduleTypeDTO) {
+		this.scheduleTypeDTO = scheduleTypeDTO;
+	}
 	
 	@Override
 	public String toString() {
 		return "ScheduleDTO [idx=" + idx + ", name=" + name + ", period=" + period + ", typeIdx=" + typeIdx
 				+ ", restingGauge=" + restingGauge + ", maxRestingGauge=" + maxRestingGauge + ", completeCount="
 				+ completeCount + ", maxCompleteCount=" + maxCompleteCount + ", heroIdx=" + heroIdx + ", disabled="
-				+ disabled + "]";
+				+ disabled + ", scheduleTypeDTO=" + scheduleTypeDTO + "]";
 	}
+	
 	
 	
 }

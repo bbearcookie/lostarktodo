@@ -25,10 +25,14 @@ public class HeroController {
 	private HeroService heroService;
 	
 	@PostMapping(value = "/hero/write")
-	public String createNewHero(@AuthenticationPrincipal UserDTO userResult, @ModelAttribute HeroDTO heroResult, Model model) {
+	public String createNewHero(@AuthenticationPrincipal UserDTO userResult,
+								@ModelAttribute HeroDTO heroResult,
+								@RequestParam(value="watchingHeroIdx", required=false) String watchingHeroIdx,
+								Model model) {
 		URL url = new URL("redirect:/mainpage");
 		url.addQueryParam("name", heroResult.getName());
 		url.addQueryParam("typeIdx", String.valueOf(heroResult.getTypeIdx()));
+		url.addQueryParam("watchingHeroIdx", watchingHeroIdx);
 
 		// 유효성 검사
 		// 뭔가 입력 폼에 문제가있다면 쿼리스트링에 정보들을 담아서 redirect 시켜서 GET요청 다시하도록 하면된다. 그후 뭐가 문젠지 화면에서 alert 보여준다.

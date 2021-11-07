@@ -1,5 +1,7 @@
 package com.lostarktodo.util;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +18,9 @@ public class URL {
 	
 	// URL에 쿼리 파라미터 변수를 추가함.
 	public void addQueryParam(String name, String value) {
-		params.put(name, value);
+		if (value != null) {
+			params.put(name, value);
+		}
 	}
 	
 	// URL에 있는 특정 쿼리 파라미터 변수를 제거함.
@@ -27,13 +31,16 @@ public class URL {
 	// 최종 URL 결과를 반환함.
 	public String getResult() {
 		for (Map.Entry<String, String> entry : params.entrySet()) {
-			
-			// 이미 query 파라미터가 있는 경우
-			if (url.contains("?")) {
-				url = url + "&" + entry.getKey() + "=" + entry.getValue();
-			// 아직 아무런 query 파라미터가 없는 경우
-			} else {
-				url = url + "?" + entry.getKey() + "=" + entry.getValue();
+			try {
+				// 이미 query 파라미터가 있는 경우
+				if (url.contains("?")) {
+					url = url + "&" + entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8");
+				// 아직 아무런 query 파라미터가 없는 경우
+				} else {
+					url = url + "?" + entry.getKey() + "=" + URLEncoder.encode(entry.getValue(), "UTF-8");
+				}
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
 			}
 			
 		}
