@@ -4,12 +4,14 @@ public class ScheduleDTO {
 
 	private int idx; // 스케줄 고유 번호(PK)
 	private String name; // 스케줄 이름
-	private int scheduleCode; // 스케줄 코드. 스케줄 이미지 등을 구분하기 위함.
+	private String period; // 스케줄 일간, 주간 여부 (D, W)
+	private int typeIdx; // 스케줄 코드. 스케줄 이미지 등을 구분하기 위함.
 	private int restingGauge; // 현재 휴식 게이지
 	private int maxRestingGauge; // 최대 휴식 게이지
 	private int completeCount; // 수행 횟수
 	private int maxCompleteCount; // 최대 수행 횟수
-	private int characterIdx; // CharacterDTO의 idx를 가리키는 외래 키(FK)
+	private int heroIdx; // HeroDTO의 idx를 가리키는 외래 키(FK)
+	private String disabled; // 스케줄 삭제 여부
 	
 	public int getIdx() {
 		return idx;
@@ -23,11 +25,17 @@ public class ScheduleDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getScheduleCode() {
-		return scheduleCode;
+	public String getPeriod() {
+		return period;
 	}
-	public void setScheduleCode(int scheduleCode) {
-		this.scheduleCode = scheduleCode;
+	public void setPeriod(String period) {
+		this.period = period;
+	}
+	public int getTypeIdx() {
+		return typeIdx;
+	}
+	public void setTypeIdx(int typeIdx) {
+		this.typeIdx = typeIdx;
 	}
 	public int getRestingGauge() {
 		return restingGauge;
@@ -53,18 +61,25 @@ public class ScheduleDTO {
 	public void setMaxCompleteCount(int maxCompleteCount) {
 		this.maxCompleteCount = maxCompleteCount;
 	}
-	public int getCharacterIdx() {
-		return characterIdx;
+	public int getHeroIdx() {
+		return heroIdx;
 	}
-	public void setCharacterIdx(int characterIdx) {
-		this.characterIdx = characterIdx;
+	public void setHeroIdx(int heroIdx) {
+		this.heroIdx = heroIdx;
+	}
+	public String getDisabled() {
+		return disabled;
+	}
+	public void setDisabled(String disabled) {
+		this.disabled = disabled;
 	}
 	
 	@Override
 	public String toString() {
-		return "ScheduleDTO [idx=" + idx + ", name=" + name + ", scheduleCode=" + scheduleCode + ", restingGauge="
-				+ restingGauge + ", maxRestingGauge=" + maxRestingGauge + ", completeCount=" + completeCount
-				+ ", maxCompleteCount=" + maxCompleteCount + ", characterIdx=" + characterIdx + "]";
+		return "ScheduleDTO [idx=" + idx + ", name=" + name + ", period=" + period + ", typeIdx=" + typeIdx
+				+ ", restingGauge=" + restingGauge + ", maxRestingGauge=" + maxRestingGauge + ", completeCount="
+				+ completeCount + ", maxCompleteCount=" + maxCompleteCount + ", heroIdx=" + heroIdx + ", disabled="
+				+ disabled + "]";
 	}
 	
 	

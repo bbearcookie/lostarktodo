@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+  <!-- 일간 스케줄 편집 모달 -->
+  <section th:fragment="wrapper" class="modal fade" id="dailyScheduleWriteModal" tabindex="-1" aria-labelledby="dailyScheduleWriteModal" aria-hidden="true">
+    <form class="modal-dialog modal-lg" th:action="@{/schedule/write}" th:object="${scheduleWriteParams}" method="post">
+      <div class="modal-content">
+
+        <!-- 모달 header -->
+        <div class="modal-header">
+          <h5 class="modal-title" id="dailyScheduleWriteModalLabel" style="font-weight: bold;">일간 스케줄</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <!-- 모달 body -->
+        <div class="modal-body">
+
+          <!-- 폼 양식 -->
+          <article class="row">
+            <div class="icon-area">
+              <div class="label">아이콘</div>
+              <img
+                width="35px" height="35px"
+                src="/icon/hero/default.png"
+                class="heroIcon img-fluid rounded-start"
+                alt="캐릭터 아이콘"
+                data-bs-toggle="tooltip" data-bs-placement="bottom" title="선택"
+                onclick="toggleScheduleIconSelectArea()"
+              />
+              <input type="hidden" name="watchingHeroIdx" th:value="${watchingHeroIdx}"/>
+              <input type="hidden" th:field="*{period}" class="schedulePeriodInput"/>
+              <input type="hidden" th:field="*{typeIdx}" class="scheduleTypeIdxInput"/>
+            </div>
+  
+            <div class="col-4">
+              <div class="label">이름</div>
+              <input
+                type="text"
+                th:field="*{name}"
+                th:value="*{name}"
+                class="form-control"
+                placeholder="이름을 입력해주세요."
+                maxlength="12"
+              />
+            </div>
+  
+            <div class="col-4">
+              <div class="label">휴식게이지</div>
+              <input
+                type="range"
+                th:field="*{restingGauge}"
+                th:value="*{restingGauge}"
+                class="form-range"
+                value="0" min="0" max="100" step="10"
+                oninput="onInputRange(this, 'restingGaugeText')"/>
+              <span id="restingGaugeText">0</span>
+            </div>
+  
+            <div class="col-2">
+              <div class="label">목표 횟수</div>
+              <input
+                type="number"
+                th:field="*{maxCompleteCount}"
+                th:value="*{maxCompleteCount}"
+                class="form-control"
+                placeholder="0" min="0" max="100"/>
+            </div>
+          </article>
+
+          <!-- 스케줄 아이콘 선택 공간. alt 값을 schedule_type의 idx 값으로 사용할것이다. -->
+          <article id="scheduleIconSelectArea" class="mt-5" style="display: none;">
+            <div class="label">아이콘 목록</div>
+            <img
+              th:each="scheduleType: ${scheduleTypeList}"
+              th:alt="${scheduleType.idx}"
+              width="35px" height="35px"
+              th:src="@{/icon/schedule/{name}.png(name=${scheduleType.nameEn})}"
+              class="heroIcon img-fluid rounded-start"
+              alt="스케줄 아이콘"
+              data-bs-toggle="tooltip" data-bs-placement="bottom" th:title="${scheduleType.nameKr}"
+              onclick="onClickScheduleIcon(this)"
+            />
+          </article>
+          
+        </div>
+
+        <!-- 모달 footer -->
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">예</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">아니오</button>
+        </div>
+        
+      </div>
+    </form>
+  </section>
+
+</html>

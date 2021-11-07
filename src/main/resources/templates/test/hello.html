@@ -1,29 +1,19 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorator="layout/basic">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <div th:replace="/layout/basic.html :: head"></div>
+    <title>Test Page</title>
+    <link th:href="@{/css/mainpage/index.css}" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container mt-3">
+      <h3>Tooltip Example</h3>
+      
+      <button type="button" class="btn btn-primary" data-bs-toggle="tooltip" title="Hooray!">
+        Hover over me!
+      </button>
+    </div>
 
-  <th:block layout:fragment="title">
-    <title>This is a hello page!!!!</title>
-  </th:block>
-
-  <th:block layout:fragment="body">
-    <div>body에 이런 값들이 제대로 들어갈까??? 환영한다!!</div>
-    <div>스타일이 잘 들어갔을까나??</div>
-    <form th:action="@{/logout}" method="post">
-      <button class="w-100 btn btn-lg btn-primary" type="submit">로그아웃</button>
-    </form>
-
-    <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="top" data-bs-content="Top popover">
-      Popover on top
-    </button>
-    <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="right" data-bs-content="Right popover">
-      Popover on right
-    </button>
-    <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" data-bs-content="Bottom popover">
-      Popover on bottom
-    </button>
-    <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="left" data-bs-content="Left popover">
-      Popover on left
-    </button>
-
-  </th:block>
+    <div th:replace="/layout/basic.html :: body"></div>
+  </body>
 </html>

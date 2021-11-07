@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+  <!-- 캐릭터 카드 -->
+  <form
+    th:fragment="wrapper"
+    th:each="hero : ${heroList}"
+    th:if="${hero.disabled == 'N'}"
+    class="col-lg-3 col-md-4 col-sm-6 mb-2"
+    th:action="@{/mainpage}"
+    method="get"
+  >
+    <div class="hero card p-1 mb-3">
+      <input type="hidden" name="watchingHeroIdx" th:value="${hero.idx}"/>
+      <button type="submit">
+        <div class="row g-0">
+          <div class="image-section col-3">
+            <img
+            width="65px"
+            height="65px"
+            th:src="@{/icon/hero/normal/{name}.png(name=${hero.heroTypeDTO.nameEn})}"
+            class="heroIcon img-fluid rounded-start"
+            alt="캐릭터 아이콘"/>
+          </div>
+          <div class="col-9">
+            <div class="card-body">
+              <p class="card-title" th:text="${hero.heroTypeDTO.nameKr}">직업명</p>
+              <p class="card-text" th:text="${hero.name}">캐릭터명</p>
+            </div>
+          </div>
+        </div>
+      </button>
+
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-12 btn-group">
+        <button type="button" th:value="${hero.idx}" class="btn btn-secondary" onclick="onClickHeroEditButton(this)">캐릭터 수정</button>
+        <button type="button" th:value="${hero.idx}" class="btn btn-danger" onclick="onClickHeroRemoveButton(this)">캐릭터 삭제</button>
+      </div>
+    </div>
+  </form>
+  
+</html>

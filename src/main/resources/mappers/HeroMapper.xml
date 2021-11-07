@@ -56,6 +56,8 @@
       user_idx = #{userIdx}
     AND
       disabled = 'N'
+    ORDER BY
+      idx
   </select>
   
   <resultMap id="HeroResultMap" type="HeroDTO">
@@ -81,6 +83,8 @@
       h.type_idx = t.idx
     WHERE
       h.user_idx = ${userIdx}
+    ORDER BY
+      h.idx
   </select>
   
 </mapper>

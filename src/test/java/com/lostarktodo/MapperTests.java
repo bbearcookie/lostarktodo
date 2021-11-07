@@ -1,15 +1,16 @@
 package com.lostarktodo;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
-import com.lostarktodo.domain.HeroDTO;
+import com.lostarktodo.domain.ScheduleDTO;
 import com.lostarktodo.mapper.HeroMapper;
 import com.lostarktodo.mapper.HeroTypeMapper;
+import com.lostarktodo.mapper.ScheduleMapper;
+import com.lostarktodo.mapper.ScheduleTypeMapper;
 import com.lostarktodo.mapper.UserMapper;
 import com.lostarktodo.service.HeroService;
 
@@ -24,6 +25,12 @@ public class MapperTests {
 	
 	@Autowired
 	private HeroMapper heroMapper;
+	
+	@Autowired
+	private ScheduleTypeMapper scheduleTypeMapper;
+	
+	@Autowired
+	private ScheduleMapper scheduleMapper;
 	
 	@Autowired
 	private HeroService heroService;
@@ -116,27 +123,75 @@ public class MapperTests {
 //		System.out.println(hero);
 //	}
 	
-	@Test
-	public void testOfGson() {
-		HeroDTO params = heroService.getHero(1);
-		
-		ObjectMapper objMapper = new ObjectMapper();
-		
-		try {
-			String jsonInString = objMapper.writerWithDefaultPrettyPrinter().writeValueAsString(params);
-			System.out.println(jsonInString);
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
-		
-//		JsonObject jsonObject = new JsonObject();
-//		jsonObject.addProperty("idx", params.getIdx());
-//		jsonObject.addProperty("name", params.getName());
-//		jsonObject.addProperty("typeIdx", params.getTypeIdx());
-//		jsonObject.addProperty("userIdx", params.getUserIdx());
-//		jsonObject.addProperty("disabled", params.getDisabled());
-//		String jsonStr = gson.toJson(jsonObject);
-//		System.out.println(jsonStr);
+//	@Test
+//	public void testOfGson() {
+//		HeroDTO params = heroService.getHero(1);
+//		
+//		ObjectMapper objMapper = new ObjectMapper();
+//		
+//		try {
+//			String jsonInString = objMapper.writerWithDefaultPrettyPrinter().writeValueAsString(params);
+//			System.out.println(jsonInString);
+//		} catch (JsonProcessingException e) {
+//			e.printStackTrace();
+//		}
+//		
+////		JsonObject jsonObject = new JsonObject();
+////		jsonObject.addProperty("idx", params.getIdx());
+////		jsonObject.addProperty("name", params.getName());
+////		jsonObject.addProperty("typeIdx", params.getTypeIdx());
+////		jsonObject.addProperty("userIdx", params.getUserIdx());
+////		jsonObject.addProperty("disabled", params.getDisabled());
+////		String jsonStr = gson.toJson(jsonObject);
+////		System.out.println(jsonStr);
+////		System.out.println(params);
+//	}
+	
+//	@Test
+//	public void testOfScheduleType() {
+//		List<ScheduleTypeDTO> list = scheduleTypeMapper.selectScheduleTypeList();
+//		System.out.println(list);
+//	}
+	
+//	@Test
+//	public void testOfInsertSchedule() {
+//		ScheduleDTO params = new ScheduleDTO();
+//		params.setIdx(0);
+//		params.setName("주간테스트");
+//		params.setPeriod("W");
+//		params.setRestingGauge(0);
+//		params.setMaxRestingGauge(100);
+//		params.setCompleteCount(0);
+//		params.setMaxCompleteCount(2);
+//		params.setTypeIdx(1);
+//		params.setHeroIdx(1);
+//		
+//		scheduleMapper.insertSchedule(params);
+//	}
+	
+//	@Test
+//	public void testOfUpdateSchedule() {
+//		ScheduleDTO params = scheduleMapper.selectScheduleDetail(1);
 //		System.out.println(params);
+//		
+//		params.setRestingGauge(40);
+//		scheduleMapper.updateSchedule(params);
+//	}
+	
+//	@Test
+//	public void testOfDeleteSchedule() {
+//		scheduleMapper.deleteSchedule(1);
+//	}
+	
+//	@Test
+//	public void testOfSeekDailySchedule() {
+//		List<ScheduleDTO> list = scheduleMapper.selectDailyScheduleListByHeroidx(1);
+//		System.out.println(list);
+//	}
+	
+	@Test
+	public void testOfSeekWeeklySchedule() {
+		List<ScheduleDTO> list = scheduleMapper.selectWeeklyScheduleListByHeroidx(1);
+		System.out.println(list);
 	}
 }

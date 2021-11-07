@@ -5,12 +5,15 @@
   <section th:fragment="wrapper" class="modal fade" id="heroWriteModal" tabindex="-1" aria-labelledby="heroWriteModal" aria-hidden="true">
     <form class="modal-dialog modal-lg" th:action="@{/hero/write}" th:object="${heroWriteParams}" method="post">
       <div class="modal-content">
+
+        <!-- 모달 헤더 -->
         <div class="modal-header">
           <h5 class="modal-title" id="heroWriteModalLabel" style="font-weight: bold;">캐릭터 정보</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
-        <div class="row modal-body">
+        <!-- 모달 바디 -->
+        <div class="modal-body row">
           <div class="col-1 d-flex align-items-center">
             <img
               width="65px"
@@ -22,7 +25,7 @@
           </div>
 
           <div class="col-3">
-            <div style="color: gray;">직업</div>
+            <div class="label">직업</div>
 
             <select th:field="*{typeIdx}" class="form-select" aria-label="heroSelect" onchange="changeHeroIcon(this.value)">
               <option value="0" selected>선택</option>
@@ -31,7 +34,7 @@
           </div>
 
           <div class="col-8">
-            <div style="color: gray;">캐릭터명</div>
+            <div class="label">캐릭터명</div>
             <input
               type="text"
               th:field="*{name}"
@@ -45,6 +48,7 @@
           </div>
         </div>
 
+        <!-- 모달 푸터 -->
         <div class="modal-footer d-flex flex-column align-items-end">
           <div id="didNotSelectHerotype" th:if="${error} == 'didNotSelectHerotype'" class="alert alert-danger" role="alert">
             직업을 선택해주세요.
@@ -60,8 +64,8 @@
             <button type="submit" class="btn btn-primary">저장</button>
           </div>
         </div>
-      </div>
 
+      </div>
     </form>
   </section>
 

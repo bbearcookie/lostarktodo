@@ -10,6 +10,19 @@
         didNotTypeHeroname.style.display = "none";
     }
 
+    // range 타입의 input의 값이 변경되면
+    function onInputRange(e, spanId) {
+      // spanId를 id로 하는 요소의 텍스트를 range 타입의 input의 value로 변경함.
+      let restingGaugeEl = document.getElementById(spanId);
+      restingGaugeEl.innerText = e.value;
+      // console.log("현재텍스트: " + restingGaugeEl.innerText);
+    }
+
+    // 캐릭터 카드 눌렀을 때
+    function onClickHeroCard(heroIdx) {
+      console.log(heroIdx);
+    }
+
     // 캐릭터 추가 버튼 눌렀을 때
     function onClickHeroAddButton() {
       // 직업 아이콘 초기화
@@ -28,7 +41,7 @@
 
     // 캐릭터 수정 버튼 눌렀을때
     function onClickHeroEditButton(e) {
-      let url = /*[[ @{/hero} ]]*/ null;
+      let url = /*[[ @{/api/hero} ]]*/ null;
       url += "/" + e.value; // heroIdx 값임.
 
       // 해당 캐릭터의 정보를 비동기 방식으로 서버에서 가져옴
@@ -46,7 +59,7 @@
 
     // 캐릭터 삭제 버튼 눌렀을때
     function onClickHeroRemoveButton(e) {
-      let url = /*[[ @{/hero} ]]*/ null;
+      let url = /*[[ @{/api/hero} ]]*/ null;
       url += "/" + e.value; // heroIdx 값임.
 
       axios.get(url).then(function (res) {
@@ -59,6 +72,27 @@
       }).catch(function (err) {
         console.log(err);
       });
+    }
+
+    // 일간 스케줄 추가 버튼 눌렀을때
+    function onClickDailyScheduleButton() {
+      let inputEl = document.querySelector('#dailyScheduleWriteModal .schedulePeriodInput');
+      inputEl.value = "D";
+    }
+
+    // 스케줄 아이콘 목록에서 원하는 아이콘 눌렀을때
+    function onClickScheduleIcon(e) {
+
+      // typeIdx 값 설정
+      const scheduleTypeList = /*[[ ${scheduleTypeList} ]]*/ null;
+      const scheduleTypeIdxInput = document.querySelector("#dailyScheduleWriteModal .scheduleTypeIdxInput");
+      scheduleTypeIdxInput.value = scheduleTypeList[e.alt-1].idx;
+
+      // 선택한 아이콘으로 이미지 변경
+      changeDailyScheduleIcon(e.alt);
+
+      // 아이콘 목록 숨김.
+      toggleScheduleIconSelectArea();
     }
 
     // 화면 로드 됐을때

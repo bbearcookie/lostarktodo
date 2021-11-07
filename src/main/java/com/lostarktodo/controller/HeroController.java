@@ -69,8 +69,9 @@ public class HeroController {
 		return url.getResult();
 	}
 	
+	// heroIdx에 해당하는 캐릭터의 정보를 json 형태로 반환.
 	@ResponseBody
-	@GetMapping(value = "/hero/{heroIdx}")
+	@GetMapping(value = "/api/hero/{heroIdx}")
 	public HeroDTO getHeroInfo(@PathVariable String heroIdx, Model model) {
 		HeroDTO params = heroService.getHero(Integer.parseInt(heroIdx));
 		return params;
