@@ -30,6 +30,18 @@ public class HeroServiceImpl implements HeroService {
 		return heroMapper.selectHeroDetail(heroIdx);
 	}
 	
+	public boolean deleteHero(int idx) {
+		int queryResult = 0;
+		
+		HeroDTO hero = heroMapper.selectHeroDetail(idx);
+		
+		if (hero != null && "N".equals(hero.getDisabled())) {
+			queryResult = heroMapper.deleteHero(idx);
+		}
+		
+		return (queryResult == 1);
+	}
+	
 	public List<HeroDTO> selectHeroListAndHeroTypeByUseridx(int userIdx) {
 		return heroMapper.selectHeroListAndHeroTypeByUseridx(userIdx);
 	}

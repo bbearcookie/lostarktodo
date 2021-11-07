@@ -91,7 +91,7 @@ layout:decorator="layout/basic">
     </section>
     
 
-    <!-- 캐릭터 삭제 모달 (Form은 무조건 object로 묶고 ) -->
+    <!-- 캐릭터 삭제 모달 (Form은 무조건 object로 묶어서 컨트롤러에서 DTO클래스로 받거나, 아니면 name 필드와 RequestParam 애노테이션으로 따로따로 받거나 둘 중 한가지 방법을 써야하는듯하다.) -->
     <div class="modal fade" id="heroRemoveModal" tabindex="-1" aria-labelledby="heroRemoveModalLabel" aria-hidden="true">
       <form class="modal-dialog modal-lg" th:action="@{/hero/delete}" method="post">
         <div class="modal-content">
@@ -129,7 +129,7 @@ layout:decorator="layout/basic">
 
         <section class="row">
 
-          <article th:each="hero : ${heroList}" class="col-lg-3 col-md-4 col-sm-6 mb-2">
+          <article th:each="hero : ${heroList}" th:if="${hero.disabled == 'N'}" class="col-lg-3 col-md-4 col-sm-6 mb-2">
             <div class="hero card p-1 mb-3">
               <div class="row g-0">
                 <div class="image-section col-3">
