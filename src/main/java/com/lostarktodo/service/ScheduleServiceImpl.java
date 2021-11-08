@@ -27,13 +27,30 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return (queryResult == 1);
 	}
 	
-	public List<ScheduleDTO> selectDailyScheduleListAndScheduleTypeByHeroidx(int heroIdx) {
-		List<ScheduleDTO> list = scheduleMapper.selectDailyScheduleListAndScheduleTypeByHeroidx(heroIdx);
+	public List<ScheduleDTO> selectDailyScheduleListAndScheduleTypeByHeroidx(int scheduleIdx) {
+		List<ScheduleDTO> list = scheduleMapper.selectDailyScheduleListAndScheduleTypeByHeroidx(scheduleIdx);
 		return list;
 	}
 	
-	public List<ScheduleDTO> selectWeeklyScheduleListAndScheduleTypeByHeroidx(int heroIdx) {
-		List<ScheduleDTO> list = scheduleMapper.selectWeeklyScheduleListAndScheduleTypeByHeroidx(heroIdx);
+	public List<ScheduleDTO> selectWeeklyScheduleListAndScheduleTypeByHeroidx(int scheduleIdx) {
+		List<ScheduleDTO> list = scheduleMapper.selectWeeklyScheduleListAndScheduleTypeByHeroidx(scheduleIdx);
 		return list;
+	}
+	
+	public ScheduleDTO increaseCompleteSchedule(int scheduleIdx) {
+		ScheduleDTO params = scheduleMapper.selectScheduleDetail(scheduleIdx);
+		
+		if (params != null) {
+			// completeCount를 1 증가시켰을때 최대치를 초과하게되면 0으로 만든다.
+			if (params.getCompleteCount() + 1 <= params.getMaxCompleteCount()) {
+				params.setCompleteCount(params.getCompleteCount() + 1);
+			} else {
+				params.setCompleteCount(0);
+			}
+			
+			scheduleMapper.updateSchedule(params);
+		}
+		
+		return params;
 	}
 }

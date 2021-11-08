@@ -15,7 +15,6 @@
       // spanId를 id로 하는 요소의 텍스트를 range 타입의 input의 value로 변경함.
       let restingGaugeEl = document.getElementById(spanId);
       restingGaugeEl.innerText = e.value;
-      // console.log("현재텍스트: " + restingGaugeEl.innerText);
     }
 
     // 캐릭터 카드 눌렀을 때
@@ -74,6 +73,29 @@
       });
     }
 
+    // 스케줄 완료 버튼 눌렀을때
+    function onClickScheduleCompleteButton(e) {
+      let url = /*[[ @{/api/schedule/complete} ]]*/ null;
+      url += "/" + e.value; // scheduleIdx 값임.
+      const dailyScheduleEl = e.parentNode.parentNode.parentNode; // 테이블의 한 행의 dom을 가리킴.
+
+      axios.patch(url).then(function (res) {
+        if (res.status === 200) {
+
+          // completeCount 값을 보여주는 span을 업데이트.
+          let completeCountLabel = dailyScheduleEl.querySelector(".completeCountLabel");
+          completeCountLabel.innerHTML = res.data.completeCount;
+
+          // 완료 횟수 프로그레스 바 업데이트
+          let completeCountBar = dailyScheduleEl.querySelector('.completeCountBar');
+          setProgressbarGauge(completeCountBar, res.data.completeCount, res.data.maxCompleteCount);
+
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+
     // 일간 스케줄 추가 버튼 눌렀을때
     function onClickDailyScheduleButton() {
       setSchedulePeriod();
@@ -94,7 +116,7 @@
       toggleScheduleIconSelectArea();
     }
 
-    // 화면 로드 됐을때
+    // 화면 로드 됐을때 ==============================================================================================================
     window.onload = function() {
       const error = /*[[ ${error} ]]*/ null;
 
@@ -124,7 +146,7 @@
       // 유효성 검증에 실패하여 재입력 받아야하는 경우
       // 사용자가 수정할 수 있게 다시 모달을 띄어줌.
       if (error) {
-        if (error.includes("didNotSelectScheduleIcon") || error.includes("didNotTypeSchedulename")) {
+        if (error.includes("didNotSelectScheduleIcon") || error.includes("didNotTypeSchedulename") || error.includes("didNotTypeValidMaxCompleteCount")) {
 
           const modal = new bootstrap.Modal(document.querySelector('#dailyScheduleWriteModal'), {
             keyboard: true
@@ -133,6 +155,25 @@
           modal.show();
         }
       }
+
+      // 일간 스케줄 리스트에서 초기화가 필요한 내용들
+      let dailyScheduleList = document.querySelectorAll(".dailySchedule");
+      for (e of dailyScheduleList) {
+
+        // 휴식 게이지 프로그레스 바 업데이트
+        let restingGaugeBar = e.querySelector('.restingGaugeBar');
+        let restingGauge = e.querySelector(".restingGaugeLabel").innerText;
+        let maxRestingGauge = e.querySelector(".maxRestingGaugeLabel").innerText;
+        setProgressbarGauge(restingGaugeBar, restingGauge, maxRestingGauge);
+
+        // 완료 횟수 프로그레스 바 업데이트
+        let completeCountBar = e.querySelector('.completeCountBar');
+        let completeCount = e.querySelector(".completeCountLabel").innerText;
+        let maxCompleteCount = e.querySelector(".maxCompleteCountLabel").innerText;
+        setProgressbarGauge(completeCountBar, completeCount, maxCompleteCount);
+
+      }
+
     }
 
     /*]]>*/

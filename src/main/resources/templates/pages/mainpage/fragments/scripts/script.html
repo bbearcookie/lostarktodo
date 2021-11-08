@@ -87,6 +87,17 @@
       periodEl.value = "D";
     }
 
+    // 해당 프로그레스 바 게이지를 몇 %로 채워야 할지 백분율 계산해서 자동으로 채워줌.
+    function setProgressbarGauge(progressbar, now, max) {
+      let result;
+      if (max == 0) {
+        result = 100;
+      } else {
+        result = now / max * 100;
+      }
+      progressbar.style.width = result + "%";
+    }
+
     /*]]>*/
   </script>
 </html>
