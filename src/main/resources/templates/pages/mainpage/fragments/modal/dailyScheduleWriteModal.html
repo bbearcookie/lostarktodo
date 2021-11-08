@@ -38,8 +38,7 @@
                 type="text"
                 th:field="*{name}"
                 th:value="*{name}"
-                class="form-control"
-                id="scheduleNameInput"
+                class="nameInput form-control"
                 placeholder="이름을 입력해주세요."
                 maxlength="12"
               />
@@ -51,11 +50,10 @@
                 type="range"
                 th:field="*{restingGauge}"
                 th:value="*{restingGauge}"
-                class="form-range"
-                id="restingGaugeInput"
+                class="restingGaugeInput form-range"
                 value="0" min="0" max="100" step="10"
                 oninput="onInputRange(this, 'restingGaugeText')"/>
-              <span id="restingGaugeText">0</span>
+              <span class="restingGaugeText">0</span>
             </div>
   
             <div class="col-2">
@@ -64,14 +62,13 @@
                 type="number"
                 th:field="*{maxCompleteCount}"
                 th:value="*{maxCompleteCount}"
-                class="form-control"
-                id="maxCompleteCountInput"
+                class="maxCompleteCountInput form-control"
                 placeholder="0" min="0" max="100"/>
             </div>
           </article>
 
           <!-- 스케줄 아이콘 선택 공간. alt 값을 schedule_type의 idx 값으로 사용할것이다. -->
-          <article id="scheduleIconSelectArea" class="mt-5" style="display: none;">
+          <article class="iconSelectArea mt-5" style="display: none;">
             <div class="label">아이콘 목록</div>
             <img
               th:each="scheduleType: ${scheduleTypeList}"
@@ -99,7 +96,7 @@
             목표 완료 횟수는 1 이상이어야 합니다.
           </div>
 
-          <input type="hidden" th:field="*{idx}" th:value="*{idx}" id="scheduleIdxInput"/>
+          <input type="hidden" th:field="*{idx}" th:value="*{idx}" class="idxInput"/>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
           <button type="submit" class="btn btn-primary">저장</button>
         </div>

@@ -13,7 +13,7 @@
     // range 타입의 input의 값이 변경되면
     function onInputRange(e, spanId) {
       // spanId를 id로 하는 요소의 텍스트를 range 타입의 input의 value로 변경함.
-      let restingGaugeEl = document.getElementById(spanId);
+      let restingGaugeEl = document.querySelector("#dailyScheduleWriteModal ." + spanId);
       restingGaugeEl.innerText = e.value;
     }
 
