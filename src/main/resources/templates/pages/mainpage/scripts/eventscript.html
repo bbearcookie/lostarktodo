@@ -123,8 +123,8 @@
 
       // typeIdx 값 설정
       const scheduleTypeList = /*[[ ${scheduleTypeList} ]]*/ null;
-      const scheduleTypeIdxInput = document.querySelector("#dailyScheduleWriteModal .scheduleTypeIdxInput");
-      scheduleTypeIdxInput.value = scheduleTypeList[e.alt-1].idx;
+      const typeIdxInput = document.querySelector("#dailyScheduleWriteModal .typeIdxInput");
+      typeIdxInput.value = scheduleTypeList[e.alt-1].idx;
 
       // 선택한 아이콘으로 이미지 변경
       changeDailyScheduleIcon(e.alt);
