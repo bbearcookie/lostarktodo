@@ -73,6 +73,23 @@
       });
     }
 
+    // 스케줄 수정 버튼 눌렀을때
+    function onClickScheduleEditButton(e) {
+      let url = /*[[ @{/api/schedule} ]]*/ null;
+      url += "/" + e.value; // scheduleIdx 값임.
+
+      axios.get(url).then(function (res) {
+        if (res.status === 200) {
+          changeScheduleWriteForm(res.data);
+          openModal("dailyScheduleWriteModal");
+        } else {
+          console.log(res.status + ": " + res.statusText);
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+
     // 스케줄 완료 버튼 눌렀을때
     function onClickScheduleCompleteButton(e) {
       let url = /*[[ @{/api/schedule/complete} ]]*/ null;
@@ -137,12 +154,12 @@
         }
       }
 
-      // 일간 스케줄 모달 폼의 캐릭터 아이콘 설정
+      // 일간 스케줄 편집 모달 폼의 캐릭터 아이콘 설정
       const scheduleWriteParams = /*[[ ${scheduleWriteParams} ]]*/ null;
       changeDailyScheduleIcon(scheduleWriteParams.typeIdx);
       setSchedulePeriod();
 
-      // 스케줄 편집 모달 폼에서 POST 요청후 리다이렉션 했는데
+      // 일간 스케줄 편집 모달 폼에서 POST 요청후 리다이렉션 했는데
       // 유효성 검증에 실패하여 재입력 받아야하는 경우
       // 사용자가 수정할 수 있게 다시 모달을 띄어줌.
       if (error) {

@@ -53,4 +53,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 		
 		return params;
 	}
+	
+	public ScheduleDTO getSchedule(int scheduleIdx) {
+		return scheduleMapper.selectScheduleDetail(scheduleIdx);
+	}
 }

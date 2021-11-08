@@ -71,6 +71,25 @@
       heroNameEl.innerText = hero.name;
     }
 
+    // 일간 스케줄 편집 모달의 내용을 변경함.
+    function changeScheduleWriteForm(schedule) {
+      // 아이콘 변경
+      changeDailyScheduleIcon(schedule.typeIdx);
+
+      // scheduleIdx 변경
+      document.querySelector("#dailyScheduleWriteModal #scheduleIdxInput").value = schedule.idx;
+
+      // 이름 변경
+      document.querySelector("#dailyScheduleWriteModal #scheduleNameInput").value = schedule.name;
+
+      // 휴식 게이지 변경
+      document.querySelector("#dailyScheduleWriteModal #restingGaugeInput").value = schedule.restingGauge;
+      document.querySelector("#dailyScheduleWriteModal #restingGaugeText").innerText = schedule.restingGauge;
+
+      // 목표 완료 횟수 변경
+      document.querySelector("#dailyScheduleWriteModal #maxCompleteCountInput").value = schedule.maxCompleteCount;
+    }
+
     // 스케줄 생성 모달의 아이콘 목록을 보여주거나 숨김.
     function toggleScheduleIconSelectArea() {
       let areaEl = document.querySelector("#scheduleIconSelectArea");

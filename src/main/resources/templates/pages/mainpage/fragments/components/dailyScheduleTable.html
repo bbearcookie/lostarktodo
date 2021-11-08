@@ -3,7 +3,7 @@
 
   <article th:fragment="wrapper" class="dailyScheduleTable">
     <!-- 일간 스케줄 테이블 -->
-    <div class="row ms-2">
+    <div class="row ms-2 mb-2">
 
       <!-- 테이블 타이틀 -->
       <div class="row col-12 table-bar">
@@ -78,14 +78,10 @@
         <div class="col-3 table-tr ms-3">
           <div class="btn-group" role="group" aria-label="Basic mixed styles example">
             <button type="button" th:value="${dailySchedule.idx}" class="btn btn-warning" onclick="onClickScheduleCompleteButton(this)">완료</button>
-            <button type="button" th:value="${dailySchedule.idx}" class="btn btn-secondary">수정</button>
+            <button type="button" th:value="${dailySchedule.idx}" class="btn btn-secondary" onclick="onClickScheduleEditButton(this)">수정</button>
             <button type="button" th:value="${dailySchedule.idx}" class="btn btn-danger">삭제</button>
           </div>
         </div>
-      </div>
-
-      <!-- 다음 리스트 내용 -->
-      <div class="row col-12 mt-2">
       </div>
 
     </div>

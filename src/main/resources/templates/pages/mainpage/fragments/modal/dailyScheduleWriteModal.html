@@ -22,8 +22,8 @@
               <img
                 width="35px" height="35px"
                 src="/icon/hero/default.png"
-                class="heroIcon img-fluid rounded-start"
-                alt="캐릭터 아이콘"
+                class="icon img-fluid rounded-start"
+                alt="스케줄 아이콘"
                 data-bs-toggle="tooltip" data-bs-placement="bottom" title="선택"
                 onclick="toggleScheduleIconSelectArea()"
               />
@@ -39,6 +39,7 @@
                 th:field="*{name}"
                 th:value="*{name}"
                 class="form-control"
+                id="scheduleNameInput"
                 placeholder="이름을 입력해주세요."
                 maxlength="12"
               />
@@ -51,6 +52,7 @@
                 th:field="*{restingGauge}"
                 th:value="*{restingGauge}"
                 class="form-range"
+                id="restingGaugeInput"
                 value="0" min="0" max="100" step="10"
                 oninput="onInputRange(this, 'restingGaugeText')"/>
               <span id="restingGaugeText">0</span>
@@ -63,6 +65,7 @@
                 th:field="*{maxCompleteCount}"
                 th:value="*{maxCompleteCount}"
                 class="form-control"
+                id="maxCompleteCountInput"
                 placeholder="0" min="0" max="100"/>
             </div>
           </article>
@@ -95,6 +98,8 @@
           <div id="didNotTypeValidMaxCompleteCount" th:if="${error} == 'didNotTypeValidMaxCompleteCount'" class="alert alert-danger" role="alert">
             목표 완료 횟수는 1 이상이어야 합니다.
           </div>
+
+          <input type="hidden" th:field="*{idx}" th:value="*{idx}" id="scheduleIdxInput"/>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
           <button type="submit" class="btn btn-primary">저장</button>
         </div>

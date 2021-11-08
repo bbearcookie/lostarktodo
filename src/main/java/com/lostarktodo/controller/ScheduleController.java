@@ -1,16 +1,15 @@
 package com.lostarktodo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.lostarktodo.domain.ScheduleDTO;
 import com.lostarktodo.service.ScheduleService;
@@ -58,6 +57,13 @@ public class ScheduleController {
 		scheduleService.registerSchedule(scheduleResult);
 		
 		return url.getResult();
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "/api/schedule/{scheduleIdx}")
+	public ScheduleDTO getScheduleInfo(@PathVariable String scheduleIdx, Model model) {
+		ScheduleDTO params = scheduleService.getSchedule(Integer.parseInt(scheduleIdx));
+		return params;
 	}
 	
 	// 해당 스케줄의 completeCount를 1 증가시킴. 만약 maxCompleteCount를 초과한다면 0으로 변경.

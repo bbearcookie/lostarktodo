@@ -10,7 +10,7 @@
     th:action="@{/mainpage}"
     method="get"
   >
-    <div class="hero card p-1 mb-3">
+    <div class="hero card p-1 mb-3" th:classappend="${watchingHeroIdx} == ${hero.idx} ? watching" >
       <input type="hidden" name="watchingHeroIdx" th:value="${hero.idx}"/>
       <button type="submit">
         <div class="row g-0">

@@ -9,4 +9,5 @@ public interface ScheduleService {
 	public List<ScheduleDTO> selectDailyScheduleListAndScheduleTypeByHeroidx(int scheduleIdx);
 	public List<ScheduleDTO> selectWeeklyScheduleListAndScheduleTypeByHeroidx(int scheduleIdx);
 	public ScheduleDTO increaseCompleteSchedule(int scheduleIdx);
+	public ScheduleDTO getSchedule(int scheduleIdx);
 }
