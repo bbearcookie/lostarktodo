@@ -121,6 +121,8 @@
       s.hero_idx = ${heroIdx}
     AND
       period = "D"
+    AND
+      disabled = "N"
     ORDER BY
       s.idx
   </select>
@@ -138,6 +140,8 @@
       s.hero_idx = ${heroIdx}
     AND
       period = "W"
+    AND
+      disabled = "N"
     ORDER BY
       s.idx
   </select>

@@ -19,7 +19,7 @@
 
     // 캐릭터 카드 눌렀을 때
     function onClickHeroCard(heroIdx) {
-      console.log(heroIdx);
+      // console.log(heroIdx);
     }
 
     // 캐릭터 추가 버튼 눌렀을 때
@@ -29,7 +29,7 @@
       heroIconEl.setAttribute("src", "/icon/hero/default.png");
 
       // heroIdx 값 초기화
-      document.querySelector("#heroIdxInput").value = 0;
+      document.querySelector("#removeModal .idxInput").value = 0;
 
       // 직업 선택 select의 값 초기화
       document.querySelector("#heroWriteModal select").value = 0;
@@ -63,8 +63,27 @@
 
       axios.get(url).then(function (res) {
         if (res.status === 200) {
-          changeHeroRemoveForm(res.data);
-          openModal("heroRemoveModal");
+          let url = /*[[ @{/hero/delete} ]]*/ null;
+          changeRemoveForm(res.data, url);
+          openModal("removeModal");
+        } else {
+          console.log(res.status + ": " + res.statusText);
+        }
+      }).catch(function (err) {
+        console.log(err);
+      });
+    }
+
+    // 스케줄 삭제 버튼 눌렀을때
+    function onClickScheduleRemoveButton(e) {
+      let url = /*[[ @{/api/schedule} ]]*/ null;
+      url += "/" + e.value; // scheduleIdx 값임.
+
+      axios.get(url).then(function (res) {
+        if (res.status === 200) {
+          let url = /*[[ @{/schedule/delete} ]]*/ null;
+          changeRemoveForm(res.data, url);
+          openModal("removeModal");
         } else {
           console.log(res.status + ": " + res.statusText);
         }
@@ -124,10 +143,11 @@
       // typeIdx 값 설정
       const scheduleTypeList = /*[[ ${scheduleTypeList} ]]*/ null;
       const typeIdxInput = document.querySelector("#dailyScheduleWriteModal .typeIdxInput");
-      typeIdxInput.value = scheduleTypeList[e.alt-1].idx;
+      const typeIdx = e.getAttribute("value");
+      typeIdxInput.value = scheduleTypeList[typeIdx - 1].idx;
 
       // 선택한 아이콘으로 이미지 변경
-      changeDailyScheduleIcon(e.alt);
+      changeDailyScheduleIcon(typeIdx);
 
       // 아이콘 목록 숨김.
       toggleScheduleIconSelectArea();

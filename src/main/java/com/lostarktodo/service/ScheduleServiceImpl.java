@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.lostarktodo.domain.HeroDTO;
 import com.lostarktodo.domain.ScheduleDTO;
 import com.lostarktodo.mapper.ScheduleMapper;
 
@@ -22,6 +21,18 @@ public class ScheduleServiceImpl implements ScheduleService {
 			queryResult = scheduleMapper.insertSchedule(params);
 		} else {
 			queryResult = scheduleMapper.updateSchedule(params);
+		}
+		
+		return (queryResult == 1);
+	}
+	
+	public boolean deleteSchedule(int idx) {
+		int queryResult = 0;
+		
+		ScheduleDTO schedule = scheduleMapper.selectScheduleDetail(idx);
+		
+		if (schedule != null && "N".equals(schedule.getDisabled())) {
+			queryResult = scheduleMapper.deleteSchedule(idx);
 		}
 		
 		return (queryResult == 1);

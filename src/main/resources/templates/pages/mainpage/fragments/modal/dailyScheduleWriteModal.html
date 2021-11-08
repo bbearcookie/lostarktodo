@@ -67,12 +67,12 @@
             </div>
           </article>
 
-          <!-- 스케줄 아이콘 선택 공간. alt 값을 schedule_type의 idx 값으로 사용할것이다. -->
+          <!-- 스케줄 아이콘 선택 공간. typeIdx 를 value 값으로 갖는다. -->
           <article class="iconSelectArea mt-5" style="display: none;">
             <div class="label">아이콘 목록</div>
             <img
               th:each="scheduleType: ${scheduleTypeList}"
-              th:alt="${scheduleType.idx}"
+              th:value="${scheduleType.idx}"
               width="35px" height="35px"
               th:src="@{/icon/schedule/{name}.png(name=${scheduleType.nameEn})}"
               class="heroIcon img-fluid rounded-start"
@@ -96,6 +96,7 @@
             목표 완료 횟수는 1 이상이어야 합니다.
           </div>
 
+          <input type="hidden" th:field="*{completeCount}" th:value="*{completeCount}" class="completeCountInput"/>
           <input type="hidden" th:field="*{idx}" th:value="*{idx}" class="idxInput"/>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
           <button type="submit" class="btn btn-primary">저장</button>

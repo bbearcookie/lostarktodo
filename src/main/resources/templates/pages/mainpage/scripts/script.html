@@ -46,16 +46,21 @@
       heroNameEl.value = hero.name;
     }
 
-    // 캐릭터 삭제 모달의 내용을 hero의 내용으로 변경함.
-    function changeHeroRemoveForm(hero) {
-      // heroIdx 변경
-      let heroIdxEl = document.querySelector("#heroRemoveModal .heroIdxInput");
-      heroIdxEl.value = hero.idx;
-      console.log(heroIdxEl.value);
+    // 캐릭터 삭제 모달의 내용을 변경함.
+    function changeRemoveForm(dto, url) {
 
-      // 캐릭터명 변경
-      let heroNameEl = document.querySelector("#heroRemoveModal .heroName");
-      heroNameEl.innerText = hero.name;
+      // form action 변경
+      let formEl = document.querySelector("#removeModal form");
+      formEl.setAttribute("action", url);
+
+      // idx 변경
+      let idxEl = document.querySelector("#removeModal .idxInput");
+      idxEl.value = dto.idx;
+      console.log(idxEl.value);
+
+      // name 변경
+      let nameEl = document.querySelector("#removeModal .name");
+      nameEl.innerText = dto.name;
     }
 
     // 일간 스케줄 모달에서 캐릭터의 아이콘을 typeIdx에 맞는 직업의 아이콘으로 변경한다.
@@ -81,6 +86,9 @@
 
       // typeIdx 변경
       document.querySelector("#dailyScheduleWriteModal .typeIdxInput").value = schedule.typeIdx;
+      
+      // 완료 횟수 변경
+      document.querySelector("#dailyScheduleWriteModal .completeCountInput").value = schedule.completeCount;
 
       // 이름 변경
       document.querySelector("#dailyScheduleWriteModal .nameInput").value = schedule.name;

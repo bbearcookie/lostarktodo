@@ -57,18 +57,18 @@ public class HeroController {
 	}
 	
 	@PostMapping(value = "/hero/delete")
-	public String deleteHero(@AuthenticationPrincipal UserDTO userResult, @RequestParam String heroIdx, Model model) {
+	public String deleteHero(@AuthenticationPrincipal UserDTO userResult, @RequestParam String idx, Model model) {
 		URL url = new URL("redirect:/mainpage");
-		System.out.println("heroIdx: " + heroIdx);
+		System.out.println("heroIdx: " + idx);
 		
-		HeroDTO hero = heroService.getHero(Integer.parseInt(heroIdx));
+		HeroDTO hero = heroService.getHero(Integer.parseInt(idx));
 		
 		// 지우려는 캐릭터가 로그인한 유저의 것이 아니라면 실패
 		if (hero.getUserIdx() != userResult.getIdx()) {
 			return url.getResult();
 		}
 		
-		heroService.deleteHero(Integer.parseInt(heroIdx));
+		heroService.deleteHero(Integer.parseInt(idx));
 		
 		return url.getResult();
 	}

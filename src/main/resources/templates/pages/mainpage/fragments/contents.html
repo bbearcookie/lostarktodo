@@ -3,8 +3,8 @@
 
   <!-- 화면 중간에 보여줄 내용 -->
   <main th:fragment="wrapper">
+    <div th:replace="/pages/mainpage/fragments/modal/removeModal.html :: wrapper"></div>
     <div th:replace="/pages/mainpage/fragments/modal/heroWriteModal.html :: wrapper"></div>
-    <div th:replace="/pages/mainpage/fragments/modal/heroRemoveModal.html :: wrapper"></div>
     <div th:replace="/pages/mainpage/fragments/modal/dailyScheduleWriteModal.html :: wrapper"></div>
 
     <!-- 캐릭터 영역 -->

@@ -1,6 +1,7 @@
 package com.lostarktodo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,7 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.lostarktodo.domain.HeroDTO;
 import com.lostarktodo.domain.ScheduleDTO;
+import com.lostarktodo.domain.UserDTO;
+import com.lostarktodo.service.HeroService;
 import com.lostarktodo.service.ScheduleService;
 import com.lostarktodo.util.URL;
 
@@ -20,6 +24,9 @@ public class ScheduleController {
 
 	@Autowired
 	private ScheduleService scheduleService;
+	
+	@Autowired
+	private HeroService heroService;
 	
 	@PostMapping(value = "/schedule/write")
 	public String createNewSchedule(@ModelAttribute ScheduleDTO scheduleResult,
@@ -54,6 +61,36 @@ public class ScheduleController {
 		
 		// 해당 스케줄 정보 수정 혹은 등록
 		scheduleService.registerSchedule(scheduleResult);
+		
+		return url.getResult();
+	}
+	
+	@PostMapping(value = "/schedule/delete")
+	public String deleteSchedule(@AuthenticationPrincipal UserDTO userResult,
+								 @RequestParam String idx,
+								 @RequestParam(value="watchingHeroIdx", required=false) String watchingHeroIdx,
+								 Model model) {
+		URL url = new URL("redirect:/mainpage");
+		url.addQueryParam("watchingHeroIdx", watchingHeroIdx);
+		
+		ScheduleDTO schedule = scheduleService.getSchedule(Integer.parseInt(idx));
+		HeroDTO watchingHero = heroService.getHero(Integer.parseInt(watchingHeroIdx));
+
+		System.out.println(schedule.toString());
+		System.out.println(watchingHero.toString());
+		
+		// 지우려는 스케줄이 해당 캐릭터의 것이 아니면 실패
+		if (schedule.getHeroIdx() != watchingHero.getIdx()) {
+			System.out.println("해당 캐릭터의 스케줄이 아님.");
+			return url.getResult();
+		}
+		// 해당 캐릭터가 로그인한 유저의 것이 아니라면 실패
+		if (watchingHero.getUserIdx() != userResult.getIdx()) {
+			System.out.println("해당 유저의 캐릭터가 아님.");
+			return url.getResult();
+		}
+		
+		scheduleService.deleteSchedule(Integer.parseInt(idx));
 		
 		return url.getResult();
 	}

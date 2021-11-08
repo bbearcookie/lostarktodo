@@ -59,7 +59,7 @@ public class MainpageController {
 		List<HeroDTO> possesedHeroList = heroService.selectHeroListAndHeroTypeByUseridx(user.getIdx());
 		model.addAttribute("heroList", possesedHeroList);
 		
-		// 해당 캐릭터가 가지고 있는 일간 주간 스케줄들
+		// 해당 캐릭터가 가지고 있는 스케줄들
 		if (watchingHeroIdx != null) {
 			List<ScheduleDTO> possesedDailyScheduleList = scheduleService.selectDailyScheduleListAndScheduleTypeByHeroidx(Integer.parseInt(watchingHeroIdx));
 			List<ScheduleDTO> possesedWeeklyScheduleList = scheduleService.selectWeeklyScheduleListAndScheduleTypeByHeroidx(Integer.parseInt(watchingHeroIdx));
