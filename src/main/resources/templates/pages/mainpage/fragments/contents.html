@@ -18,7 +18,7 @@
       <!-- 보여줄 캐릭터 목록 -->
       <section class="row">
         <!-- 캐릭터 정보 나타내는 카드 -->
-        <div th:replace="/pages/mainpage/fragments/card/heroCard.html :: wrapper"></div>
+        <div th:replace="/pages/mainpage/fragments/components/heroCard.html :: wrapper"></div>
       </section>
     </section>
 
@@ -29,6 +29,8 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dailyScheduleWriteModal" onclick="onClickDailyScheduleButton()">추가</button>
       </div>
       <hr/>
+
+      <div th:replace="/pages/mainpage/fragments/components/dailyScheduleTable.html :: wrapper"></div>
     </section>
 
   </main>

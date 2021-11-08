@@ -58,7 +58,7 @@ footer {
   margin-bottom: 0;
 }
 
-.modal .label {
+.label {
   color: gray;
 }
 
@@ -78,4 +78,37 @@ footer {
   cursor: pointer;
   margin-top: 8px;
   margin-right: 8px;
+}
+
+.dailyScheduleTable {
+  font-size: 1rem;
+}
+
+.dailyScheduleTable .progress {
+  height: 20px;
+}
+
+.dailyScheduleTable .label {
+  display: flex;
+  justify-content: center;
+  font-size: 0.8rem;
+}
+
+.dailyScheduleTable .table-bar {
+  background: #cfe2ff;
+  height: 50px;
+}
+
+.dailyScheduleTable .table-th {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.dailyScheduleTable .table-tr {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
