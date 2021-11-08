@@ -30,19 +30,6 @@
 
     }
 
-    // 일간 스케줄 모달에서 캐릭터의 아이콘을 typeIdx에 맞는 직업의 아이콘으로 변경한다.
-    function changeDailyScheduleIcon(typeIdx) {
-      let iconEl = document.querySelector("#dailyScheduleWriteModal .icon-area img");
-      let scheduleTypeList = /*[[ ${scheduleTypeList} ]]*/ null;
-
-      if (typeIdx > 0) {
-        let scheduleType = scheduleTypeList[typeIdx - 1];
-        iconEl.setAttribute("src", "/icon/schedule/" + scheduleType.nameEn + ".png");
-      } else {
-        iconEl.setAttribute("src", "/icon/hero/default.png");
-      }
-    }
-
     // 캐릭터 편집 모달의 input 내용들을 hero의 내용으로 변경함.
     function changeHeroWriterForm(hero) {
       // 아이콘 변경
@@ -71,6 +58,19 @@
       heroNameEl.innerText = hero.name;
     }
 
+    // 일간 스케줄 모달에서 캐릭터의 아이콘을 typeIdx에 맞는 직업의 아이콘으로 변경한다.
+    function changeDailyScheduleIcon(typeIdx) {
+      let iconEl = document.querySelector("#dailyScheduleWriteModal .icon-area img");
+      let scheduleTypeList = /*[[ ${scheduleTypeList} ]]*/ null;
+
+      if (typeIdx > 0) {
+        let scheduleType = scheduleTypeList[typeIdx - 1];
+        iconEl.setAttribute("src", "/icon/schedule/" + scheduleType.nameEn + ".png");
+      } else {
+        iconEl.setAttribute("src", "/icon/hero/default.png");
+      }
+    }
+
     // 일간 스케줄 편집 모달의 내용을 변경함.
     function changeScheduleWriteForm(schedule) {
       // 아이콘 변경
@@ -90,7 +90,7 @@
       document.querySelector("#dailyScheduleWriteModal #maxCompleteCountInput").value = schedule.maxCompleteCount;
     }
 
-    // 스케줄 생성 모달의 아이콘 목록을 보여주거나 숨김.
+    // 일간 스케줄 생성 모달의 아이콘 목록을 보여주거나 숨김.
     function toggleScheduleIconSelectArea() {
       let areaEl = document.querySelector("#scheduleIconSelectArea");
       if (areaEl.style.display === "none") {

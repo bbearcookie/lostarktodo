@@ -4,6 +4,9 @@
     <div th:replace="/layout/basic.html :: head"></div>
     <title>LostarkTodo</title>
     <link th:href="@{/css/mainpage/index.css}" rel="stylesheet">
+    <link th:href="@{/css/mainpage/heroCard.css}" rel="stylesheet">
+    <link th:href="@{/css/mainpage/dailyScheduleWriteModal.css}" rel="stylesheet">
+    <link th:href="@{/css/mainpage/dailyScheduleWriteTable.css}" rel="stylesheet">
   </head>
   <body>
     <div th:replace="/pages/mainpage/fragments/navigationBar.html :: wrapper"></div>
@@ -11,7 +14,7 @@
     <div th:replace="/pages/mainpage/fragments/footer.html :: wrapper"></div>
 
     <div th:replace="/layout/basic.html :: body"></div>
-    <div th:replace="/pages/mainpage/fragments/scripts/script.html :: wrapper"></div>
-    <div th:replace="/pages/mainpage/fragments/scripts/eventscript.html :: wrapper"></div>
+    <div th:replace="/pages/mainpage/scripts/script.html :: wrapper"></div>
+    <div th:replace="/pages/mainpage/scripts/eventscript.html :: wrapper"></div>
   </body>
 </html>
