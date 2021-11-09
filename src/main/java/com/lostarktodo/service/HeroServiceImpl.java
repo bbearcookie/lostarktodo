@@ -14,7 +14,10 @@ public class HeroServiceImpl implements HeroService {
 	@Autowired
 	private HeroMapper heroMapper;
 	
-	public boolean registerHero(HeroDTO params) {
+	@Autowired
+	private ScheduleService scheduleService;
+	
+	public int registerHero(HeroDTO params) {
 		int queryResult = 0;
 		
 		if (params.getIdx() == 0) {
@@ -23,7 +26,7 @@ public class HeroServiceImpl implements HeroService {
 			queryResult = heroMapper.updateHero(params);
 		}
 		
-		return (queryResult == 1);
+		return params.getIdx(); // 생성된 캐릭터의 idx를 반환함.
 	}
 	
 	public HeroDTO getHero(int heroIdx) {

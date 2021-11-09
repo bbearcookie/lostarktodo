@@ -19,6 +19,10 @@
       #{userIdx},
       IFNULL(#{disabled}, 'N')
     )
+    <selectKey keyProperty="idx" resultType="int" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    
   </insert>
   
   <update id="updateHero" parameterType="HeroDTO">

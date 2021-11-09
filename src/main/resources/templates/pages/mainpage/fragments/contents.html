@@ -3,10 +3,10 @@
 
   <!-- 화면 중간에 보여줄 내용 -->
   <main th:fragment="wrapper">
-    <div th:replace="/pages/mainpage/fragments/modal/removeModal.html :: wrapper"></div>
-    <div th:replace="/pages/mainpage/fragments/modal/heroWriteModal.html :: wrapper"></div>
-    <div th:replace="/pages/mainpage/fragments/modal/dailyScheduleWriteModal.html :: wrapper"></div>
-    <div th:replace="/pages/mainpage/fragments/modal/weeklyScheduleWriteModal.html :: wrapper"></div>
+    <div th:replace="/pages/mainpage/fragments/components/common/removeModal.html :: wrapper"></div>
+    <div th:replace="/pages/mainpage/fragments/components/hero/writeModal.html :: wrapper"></div>
+    <div th:replace="/pages/mainpage/fragments/components/schedule/dailyWriteModal.html :: wrapper"></div>
+    <div th:replace="/pages/mainpage/fragments/components/schedule/weeklyWriteModal.html :: wrapper"></div>
 
     <!-- 캐릭터 영역 -->
     <section class="container-lg">
@@ -18,7 +18,7 @@
       <!-- 보여줄 캐릭터 목록 -->
       <section class="row">
         <!-- 캐릭터 정보 나타내는 카드 -->
-        <div th:replace="/pages/mainpage/fragments/components/heroCard.html :: wrapper"></div>
+        <div th:replace="/pages/mainpage/fragments/components/hero/card.html :: wrapper"></div>
       </section>
     </section>
 
@@ -30,14 +30,14 @@
         <h5 class="ps-2 pt-3" style="font-weight: bold;">일간 스케줄</h5>
         <button type="button" class="daily btn btn-primary" data-bs-toggle="modal" data-bs-target="#dailyScheduleWriteModal" onclick="onClickScheduleAddButton(this)">추가</button>
       </div>
-      <div th:replace="/pages/mainpage/fragments/components/dailyScheduleTable.html :: wrapper"></div>
+      <div th:replace="/pages/mainpage/fragments/components/schedule/dailyTable.html :: wrapper"></div>
 
       <!-- 주간 스케줄 영역 -->
       <div class="title-label mb-3">
         <h5 class="ps-2 pt-3" style="font-weight: bold;">주간 스케줄</h5>
         <button type="button" class="weekly btn btn-primary" data-bs-toggle="modal" data-bs-target="#weeklyScheduleWriteModal" onclick="onClickScheduleAddButton(this)">추가</button>
       </div>
-      <div th:replace="/pages/mainpage/fragments/components/weeklyScheduleTable.html :: wrapper"></div>
+      <div th:replace="/pages/mainpage/fragments/components/schedule/weeklyTable.html :: wrapper"></div>
       
     </section>
 
