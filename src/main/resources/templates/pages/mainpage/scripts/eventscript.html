@@ -77,10 +77,6 @@
     // 일간 스케줄 추가 버튼 눌렀을 때
     function onClickDailyScheduleAddButton() {
 
-      // period를 D로 변경
-      // const periodEl = document.querySelector("#dailyScheduleWriteModal .schedulePeriodInput");
-      // periodEl.value = "D";
-
       // 아이콘 초기화
       let iconEl = document.querySelector("#dailyScheduleWriteModal .icon");
       iconEl.setAttribute("src", "/icon/hero/default.png");
@@ -121,6 +117,11 @@
       }).catch(function (err) {
         console.log(err);
       });
+    }
+
+    // 주간 스케줄 추가 버튼 눌렀을 때
+    function onClickWeeklyScheduleAddButton() {
+      console.log("onClickWeeklyScheduleAddButton");
     }
 
     // 스케줄 삭제 버튼 눌렀을때
@@ -169,12 +170,13 @@
 
       // typeIdx 값 설정
       const scheduleTypeList = /*[[ ${scheduleTypeList} ]]*/ null;
-      const typeIdxInput = document.querySelector("#dailyScheduleWriteModal .typeIdxInput");
       const typeIdx = e.getAttribute("value");
-      typeIdxInput.value = scheduleTypeList[typeIdx - 1].idx;
+      for (typeIdxInput of document.querySelectorAll(".scheduleTypeIdxInput")) {
+        typeIdxInput.value = scheduleTypeList[typeIdx - 1].idx;
+      }
 
       // 선택한 아이콘으로 이미지 변경
-      changeDailyScheduleIcon(typeIdx);
+      changeScheduleIcon(typeIdx);
 
       // 아이콘 목록 숨김.
       toggleScheduleIconSelectArea();
@@ -203,9 +205,13 @@
 
       // 일간 스케줄 편집 모달 폼의 캐릭터 아이콘 설정
       const scheduleWriteParams = /*[[ ${scheduleWriteParams} ]]*/ null;
-      changeDailyScheduleIcon(scheduleWriteParams.typeIdx);
-      const periodEl = document.querySelector("#dailyScheduleWriteModal .schedulePeriodInput");
+      changeScheduleIcon(scheduleWriteParams.typeIdx);
+
+      // 해당 스케줄 편집 모달에서 작성된 스케줄이 일간인지, 주간인지 서버에 보내주도록 함.
+      let periodEl = document.querySelector("#dailyScheduleWriteModal .schedulePeriodInput");
       periodEl.value = "D";
+      periodEl = document.querySelector("#weeklyScheduleWriteModal .schedulePeriodInput");
+      periodEl.value = "W";
 
       // 일간 스케줄 편집 모달 폼에서 POST 요청후 리다이렉션 했는데
       // 유효성 검증에 실패하여 재입력 받아야하는 경우

@@ -2,21 +2,21 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
   <!-- 일간 스케줄 편집 모달 -->
-  <section th:fragment="wrapper" class="modal fade" id="dailyScheduleWriteModal" tabindex="-1" aria-labelledby="dailyScheduleWriteModal" aria-hidden="true">
+  <section th:fragment="wrapper" class="modal fade" id="weeklyScheduleWriteModal" tabindex="-1" aria-labelledby="weeklyScheduleWriteModal" aria-hidden="true">
     <form class="modal-dialog modal-lg" th:action="@{/schedule/write}" th:object="${scheduleWriteParams}" method="post">
       <div class="modal-content">
 
         <!-- 모달 header -->
         <div class="modal-header">
-          <h5 class="modal-title" id="dailyScheduleWriteModalLabel" style="font-weight: bold;">일간 스케줄</h5>
+          <h5 class="modal-title" id="dailyScheduleWriteModalLabel" style="font-weight: bold;">주간 스케줄</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
         <!-- 모달 body -->
         <div class="modal-body">
-
-          <!-- 폼 양식 -->
           <article class="row">
+
+            <!-- 아이콘 영역 -->
             <div class="schedule-icon-area">
               <div class="label">아이콘</div>
               <img
@@ -28,11 +28,12 @@
                 onclick="toggleScheduleIconSelectArea()"
               />
               <input type="hidden" name="watchingHeroIdx" th:value="${watchingHeroIdx}"/>
-              <input type="hidden" th:field="*{period}" class="schedulePeriodInput"/> <!-- value를 바로 D로 주고싶은데 자꾸 ""로 초기화되어서 그냥 window.onload 이후에 값을 D로 변경하도록 했음. -->
+              <input type="hidden" th:field="*{period}" class="schedulePeriodInput"/> <!-- value를 바로 W로 주고싶은데 자꾸 ""로 초기화되어서 그냥 window.onload 이후에 값을 D로 변경하도록 했음. -->
               <input type="hidden" th:field="*{typeIdx}" class="scheduleTypeIdxInput"/>
             </div>
-  
-            <div class="col-4">
+
+            <!-- 이름 영역 -->
+            <div class="col-8">
               <div class="label">이름</div>
               <input
                 type="text"
@@ -43,19 +44,8 @@
                 maxlength="12"
               />
             </div>
-  
-            <div class="col-4">
-              <div class="label">휴식 게이지</div>
-              <input
-                type="range"
-                th:field="*{restingGauge}"
-                th:value="*{restingGauge}"
-                class="restingGaugeInput form-range"
-                value="0" min="0" max="100" step="10"
-                oninput="onInputRange(this, 'restingGaugeText')"/>
-              <span class="restingGaugeText">0</span>
-            </div>
-  
+
+            <!-- 목표 완료 횟수 영역 -->
             <div class="col-2">
               <div class="label">목표 완료 횟수</div>
               <input
@@ -65,6 +55,7 @@
                 class="maxCompleteCountInput form-control"
                 placeholder="0" min="0" max="100"/>
             </div>
+
           </article>
 
           <!-- 스케줄 아이콘 선택 공간. typeIdx 를 value 값으로 갖는다. -->
@@ -81,23 +72,11 @@
               onclick="onClickScheduleIcon(this)"
             />
           </article>
-          
+
         </div>
 
         <!-- 모달 footer -->
         <div class="modal-footer">
-          <div id="didNotSelectScheduleIcon" th:if="${error} == 'didNotSelectScheduleIcon'" class="alert alert-danger" role="alert">
-            스케줄 아이콘을 선택해주세요.
-          </div>
-          <div id="didNotTypeSchedulename" th:if="${error} == 'didNotTypeSchedulename'" class="alert alert-danger" role="alert">
-            스케줄명을 입력해주세요.
-          </div>
-          <div id="didNotTypeValidMaxCompleteCount" th:if="${error} == 'didNotTypeValidMaxCompleteCount'" class="alert alert-danger" role="alert">
-            목표 완료 횟수는 1 이상이어야 합니다.
-          </div>
-
-          <input type="hidden" th:field="*{completeCount}" th:value="*{completeCount}" class="completeCountInput"/>
-          <input type="hidden" th:field="*{idx}" th:value="*{idx}" class="idxInput"/>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
           <button type="submit" class="btn btn-primary">저장</button>
         </div>

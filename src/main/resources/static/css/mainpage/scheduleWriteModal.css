@@ -1,16 +1,16 @@
-#dailyScheduleWriteModal .icon-area {
+.schedule-icon-area {
   width: 10%;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
 
-#dailyScheduleWriteModal .icon-area img {
+.schedule-icon-area img {
   cursor: pointer;
   margin-left: 5px;
 }
 
-#dailyScheduleWriteModal .iconSelectArea img {
+.schedule-icon-select-area img {
   cursor: pointer;
   margin-top: 8px;
   margin-right: 8px;

@@ -63,29 +63,32 @@
       nameEl.innerText = dto.name;
     }
 
-    // 일간 스케줄 모달에서 캐릭터의 아이콘을 typeIdx에 맞는 직업의 아이콘으로 변경한다.
-    function changeDailyScheduleIcon(typeIdx) {
-      let iconEl = document.querySelector("#dailyScheduleWriteModal .icon-area img");
+    // 스케줄 모달에서 선택한 아이콘을 typeIdx에 맞는 아이콘으로 변경한다.
+    function changeScheduleIcon(typeIdx) {
       let scheduleTypeList = /*[[ ${scheduleTypeList} ]]*/ null;
 
-      if (typeIdx > 0) {
-        let scheduleType = scheduleTypeList[typeIdx - 1];
-        iconEl.setAttribute("src", "/icon/schedule/" + scheduleType.nameEn + ".png");
-      } else {
-        iconEl.setAttribute("src", "/icon/hero/default.png");
+      // 일간 스케줄 모달과 주간 스케줄 모달에 있는 이미지 모두 변경.
+      for (iconEl of document.querySelectorAll(".schedule-icon-area img")) {
+        if (typeIdx > 0) {
+          let scheduleType = scheduleTypeList[typeIdx - 1];
+          iconEl.setAttribute("src", "/icon/schedule/" + scheduleType.nameEn + ".png");
+        } else {
+          iconEl.setAttribute("src", "/icon/hero/default.png");
+        }
       }
+
     }
 
     // 일간 스케줄 편집 모달의 내용을 변경함.
     function changeDailyScheduleWriteForm(schedule) {
       // 아이콘 변경
-      changeDailyScheduleIcon(schedule.typeIdx);
+      changeScheduleIcon(schedule.typeIdx);
 
       // scheduleIdx 변경
       document.querySelector("#dailyScheduleWriteModal .idxInput").value = schedule.idx;
 
       // typeIdx 변경
-      document.querySelector("#dailyScheduleWriteModal .typeIdxInput").value = schedule.typeIdx;
+      document.querySelector("#dailyScheduleWriteModal .scheduleTypeIdxInput").value = schedule.typeIdx;
       
       // 완료 횟수 변경
       document.querySelector("#dailyScheduleWriteModal .completeCountInput").value = schedule.completeCount;
@@ -101,14 +104,18 @@
       document.querySelector("#dailyScheduleWriteModal .maxCompleteCountInput").value = schedule.maxCompleteCount;
     }
 
-    // 일간 스케줄 생성 모달의 아이콘 목록을 보여주거나 숨김.
+    // 스케줄 생성 모달의 아이콘 목록을 보여주거나 숨김.
     function toggleScheduleIconSelectArea() {
-      let areaEl = document.querySelector("#dailyScheduleWriteModal .iconSelectArea");
-      if (areaEl.style.display === "none") {
-        areaEl.style.display = "block";
-      } else {
-        areaEl.style.display = "none";
+
+      // 일간 스케줄 모달과 주간 스케줄 모달 모두 적용시킴.
+      for (areaEl of document.querySelectorAll(".schedule-icon-select-area")) {
+        if (areaEl.style.display === "none") {
+          areaEl.style.display = "block";
+        } else {
+          areaEl.style.display = "none";
+        }
       }
+
     }
 
     // 해당 프로그레스 바 게이지를 몇 %로 채워야 할지 백분율 계산해서 자동으로 채워줌.
