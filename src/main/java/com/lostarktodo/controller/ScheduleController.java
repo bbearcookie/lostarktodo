@@ -36,6 +36,11 @@ public class ScheduleController {
 		url.addQueryParam("watchingHeroIdx", watchingHeroIdx);
 		url.addQueryParam("name", scheduleResult.getName());
 		url.addQueryParam("typeIdx", String.valueOf(scheduleResult.getTypeIdx()));
+		url.addQueryParam("period", scheduleResult.getPeriod());
+		url.addQueryParam("idx", String.valueOf(scheduleResult.getIdx()));
+		url.addQueryParam("restingGauge", String.valueOf(scheduleResult.getRestingGauge()));
+		url.addQueryParam("completeCount", String.valueOf(scheduleResult.getCompleteCount()));
+		url.addQueryParam("maxCompleteCount", String.valueOf(scheduleResult.getMaxCompleteCount()));
 		
 		// 쿼리 스트링으로 받았었던, 현재 조회중인 캐릭터의 idx를 담은 값인 watchingHeroIdx의 값으로 스케줄의 heroIdx값을 설정함.
 		scheduleResult.setHeroIdx(Integer.parseInt(watchingHeroIdx));
@@ -61,6 +66,15 @@ public class ScheduleController {
 		
 		// 해당 스케줄 정보 수정 혹은 등록
 		scheduleService.registerSchedule(scheduleResult);
+		
+		// 스케줄 생성 모달 폼 내용 초기화
+		url.removeQueryParam("name");
+		url.removeQueryParam("typeIdx");
+		url.removeQueryParam("period");
+		url.removeQueryParam("idx");
+		url.removeQueryParam("restingGauge");
+		url.removeQueryParam("completeCount");
+		url.removeQueryParam("maxCompleteCount");
 		
 		return url.getResult();
 	}

@@ -28,7 +28,7 @@
                 onclick="toggleScheduleIconSelectArea()"
               />
               <input type="hidden" name="watchingHeroIdx" th:value="${watchingHeroIdx}"/>
-              <input type="hidden" th:field="*{period}" class="schedulePeriodInput"/>
+              <input type="hidden" th:field="*{period}" class="schedulePeriodInput"/> <!-- value를 바로 D로 주고싶은데 자꾸 ""로 초기화되어서 그냥 window.onload 이후에 값을 D로 변경하도록 했음. -->
               <input type="hidden" th:field="*{typeIdx}" class="typeIdxInput"/>
             </div>
   
