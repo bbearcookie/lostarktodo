@@ -28,14 +28,14 @@
       <!-- 일간 스케줄 영역 -->
       <div class="title-label mb-3">
         <h5 class="ps-2 pt-3" style="font-weight: bold;">일간 스케줄</h5>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#dailyScheduleWriteModal" onclick="onClickDailyScheduleAddButton()">추가</button>
+        <button type="button" class="daily btn btn-primary" data-bs-toggle="modal" data-bs-target="#dailyScheduleWriteModal" onclick="onClickScheduleAddButton(this)">추가</button>
       </div>
       <div th:replace="/pages/mainpage/fragments/components/dailyScheduleTable.html :: wrapper"></div>
 
       <!-- 주간 스케줄 영역 -->
       <div class="title-label mb-3">
         <h5 class="ps-2 pt-3" style="font-weight: bold;">주간 스케줄</h5>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#weeklyScheduleWriteModal" onclick="onClickWeeklyScheduleAddButton()">추가</button>
+        <button type="button" class="weekly btn btn-primary" data-bs-toggle="modal" data-bs-target="#weeklyScheduleWriteModal" onclick="onClickScheduleAddButton(this)">추가</button>
       </div>
       <div th:replace="/pages/mainpage/fragments/components/weeklyScheduleTable.html :: wrapper"></div>
       

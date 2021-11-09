@@ -79,29 +79,57 @@
 
     }
 
-    // 일간 스케줄 편집 모달의 내용을 변경함.
-    function changeDailyScheduleWriteForm(schedule) {
-      // 아이콘 변경
-      changeScheduleIcon(schedule.typeIdx);
+    // 스케줄 편집 모달의 내용을 변경함.
+    function changeScheduleWriteForm(schedule) {
 
-      // scheduleIdx 변경
-      document.querySelector("#dailyScheduleWriteModal .idxInput").value = schedule.idx;
+      // 일간 스케줄인 경우
+      if (schedule.period === "D") {
+        const modalId = "#dailyScheduleWriteModal";
+        // 아이콘 변경
+        changeScheduleIcon(schedule.typeIdx);
 
-      // typeIdx 변경
-      document.querySelector("#dailyScheduleWriteModal .scheduleTypeIdxInput").value = schedule.typeIdx;
-      
-      // 완료 횟수 변경
-      document.querySelector("#dailyScheduleWriteModal .completeCountInput").value = schedule.completeCount;
+        // scheduleIdx 변경
+        document.querySelector(modalId + " " + ".idxInput").value = schedule.idx;
 
-      // 이름 변경
-      document.querySelector("#dailyScheduleWriteModal .nameInput").value = schedule.name;
+        // typeIdx 변경
+        document.querySelector(modalId + " " + ".scheduleTypeIdxInput").value = schedule.typeIdx;
+        
+        // 완료 횟수 변경
+        document.querySelector(modalId + " " + ".completeCountInput").value = schedule.completeCount;
 
-      // 휴식 게이지 변경
-      document.querySelector("#dailyScheduleWriteModal .restingGaugeInput").value = schedule.restingGauge;
-      document.querySelector("#dailyScheduleWriteModal .restingGaugeText").innerText = schedule.restingGauge;
+        // 이름 변경
+        document.querySelector(modalId + " " + ".nameInput").value = schedule.name;
 
-      // 목표 완료 횟수 변경
-      document.querySelector("#dailyScheduleWriteModal .maxCompleteCountInput").value = schedule.maxCompleteCount;
+        // 휴식 게이지 변경
+        document.querySelector(modalId + " " + ".restingGaugeInput").value = schedule.restingGauge;
+        document.querySelector(modalId + " " + ".restingGaugeText").innerText = schedule.restingGauge;
+
+        // 목표 완료 횟수 변경
+        document.querySelector(modalId + " " + ".maxCompleteCountInput").value = schedule.maxCompleteCount;
+
+      // 주간 스케줄인 경우
+      } else if (schedule.period === "W") {
+        const modalId = "#weeklyScheduleWriteModal";
+
+        // 아이콘 변경
+        changeScheduleIcon(schedule.typeIdx);
+
+        // scheduleIdx 변경
+        document.querySelector(modalId + " " + ".idxInput").value = schedule.idx;
+
+        // typeIdx 변경
+        document.querySelector(modalId + " " + ".scheduleTypeIdxInput").value = schedule.typeIdx;
+
+        // 완료 횟수 변경
+        document.querySelector(modalId + " " + ".completeCountInput").value = schedule.completeCount;
+
+        // 이름 변경
+        document.querySelector(modalId + " " + ".nameInput").value = schedule.name;
+
+        // 목표 완료 횟수 변경
+        document.querySelector(modalId + " " + ".maxCompleteCountInput").value = schedule.maxCompleteCount;
+      }
+
     }
 
     // 스케줄 생성 모달의 아이콘 목록을 보여주거나 숨김.

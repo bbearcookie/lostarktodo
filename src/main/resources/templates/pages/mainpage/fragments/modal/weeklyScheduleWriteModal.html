@@ -77,6 +77,18 @@
 
         <!-- 모달 footer -->
         <div class="modal-footer">
+          <div th:if="${error} == 'didNotSelectScheduleIcon'" class="error didNotSelectScheduleIcon alert alert-danger" role="alert">
+            스케줄 아이콘을 선택해주세요.
+          </div>
+          <div th:if="${error} == 'didNotTypeSchedulename'" class="error didNotTypeSchedulename alert alert-danger" role="alert">
+            스케줄명을 입력해주세요.
+          </div>
+          <div th:if="${error} == 'didNotTypeValidMaxCompleteCount'" class="error didNotTypeValidMaxCompleteCount alert alert-danger" role="alert">
+            목표 완료 횟수는 1 이상이어야 합니다.
+          </div>
+
+          <input type="hidden" th:field="*{completeCount}" th:value="*{completeCount}" class="completeCountInput"/>
+          <input type="hidden" th:field="*{idx}" th:value="*{idx}" class="idxInput"/>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
           <button type="submit" class="btn btn-primary">저장</button>
         </div>

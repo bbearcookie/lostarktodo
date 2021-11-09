@@ -74,54 +74,91 @@
       });
     }
 
-    // 일간 스케줄 추가 버튼 눌렀을 때
-    function onClickDailyScheduleAddButton() {
+    // 스케줄 추가 버튼 눌렀을 때
+    function onClickScheduleAddButton(e) {
 
-      // 아이콘 초기화
-      let iconEl = document.querySelector("#dailyScheduleWriteModal .icon");
-      iconEl.setAttribute("src", "/icon/hero/default.png");
+      // 일간 스케줄 추가 버튼인 경우
+      if (e.classList.contains("daily")) {
+        let modalId = "#dailyScheduleWriteModal";
 
-      // idx 값 초기화
-      document.querySelector("#removeModal .idxInput").value = 0;
+        // 아이콘 초기화
+        let iconEl = document.querySelector(modalId + " " + ".icon");
+        iconEl.setAttribute("src", "/icon/hero/default.png");
 
-      // 스케줄명 input의 값 초기화
-      document.querySelector("#dailyScheduleWriteModal .nameInput").value = "";
+        // idx 값 초기화
+        document.querySelector(modalId + " " + ".idxInput").value = 0;
 
-      // 휴식 게이지의 값 초기화
-      document.querySelector("#dailyScheduleWriteModal .restingGaugeInput").value = 0;
+        // 스케줄 이름의 값 초기화
+        document.querySelector(modalId + " " + ".nameInput").value = "";
 
-      // 목표 완료 횟수 값 초기화
-      document.querySelector("#dailyScheduleWriteModal .maxCompleteCountInput").value = 0;
+        // 휴식 게이지의 값 초기화
+        document.querySelector(modalId + " " + ".restingGaugeInput").value = 0;
 
-      // 완료 횟수 값 초기화
-      document.querySelector("#dailyScheduleWriteModal .completeCountInput").value = 0;
+        // 휴식 게이지 라벨의 값 초기화
+        document.querySelector(modalId + " " + ".restingGaugeText").value = 0;
 
-      // 경고 alert들 초기화
-      document.querySelector("#didNotSelectScheduleIcon").style.display = "none";
-      document.querySelector("#didNotTypeSchedulename").style.display = "none";
-      document.querySelector("#didNotTypeValidMaxCompleteCount").style.display = "none";
+        // 목표 완료 횟수 값 초기화
+        document.querySelector(modalId + " " + ".maxCompleteCountInput").value = 0;
+
+        // 완료 횟수 값 초기화
+        document.querySelector(modalId + " " + ".completeCountInput").value = 0;
+
+        // 경고 alert들 초기화
+        let errors = document.querySelectorAll(modalId + " " + ".error");
+        for (errEl of errors) {
+          errEl.style.display = "none";
+        }
+
+      // 주간 스케줄 추가 버튼인 경우
+      } else if (e.classList.contains("weekly")) {
+        let modalId = "#weeklyScheduleWriteModal";
+
+        // 아이콘 초기화
+        let iconEl = document.querySelector(modalId + " " + ".icon");
+        iconEl.setAttribute("src", "/icon/hero/default.png");
+
+        // idx 값 초기화
+        document.querySelector(modalId + " " + ".idxInput").value = 0;
+
+        // 스케줄 이름의 값 초기화
+        document.querySelector(modalId + " " + ".nameInput").value = "";
+
+        // 목표 완료 횟수 값 초기화
+        document.querySelector(modalId + " " + ".maxCompleteCountInput").value = 0;
+
+        // 완료 횟수 값 초기화
+        document.querySelector(modalId + " " + ".completeCountInput").value = 0;
+
+        // 경고 alert들 초기화
+        let errors = document.querySelectorAll(modalId + " " + ".error");
+        for (errEl of errors) {
+          errEl.style.display = "none";
+        }
+      }
+
     }
 
-    // 일간 스케줄 수정 버튼 눌렀을때
-    function onClickDailyScheduleEditButton(e) {
+    // 스케줄 수정 버튼 눌렀을때
+    function onClickScheduleEditButton(e) {
       let url = /*[[ @{/api/schedule} ]]*/ null;
       url += "/" + e.value; // scheduleIdx 값임.
 
       axios.get(url).then(function (res) {
         if (res.status === 200) {
-          changeDailyScheduleWriteForm(res.data);
-          openModal("dailyScheduleWriteModal");
+            changeScheduleWriteForm(res.data);
+          
+          // 수정하려는 스케줄에 따라 일간 스케줄, 주간 스케줄 편집 모달을 띄어줌.
+          if (res.data.period === "D") {
+            openModal("dailyScheduleWriteModal");
+          } else if (res.data.period === "W") {
+            openModal("weeklyScheduleWriteModal");
+          }
         } else {
           console.log(res.status + ": " + res.statusText);
         }
       }).catch(function (err) {
         console.log(err);
       });
-    }
-
-    // 주간 스케줄 추가 버튼 눌렀을 때
-    function onClickWeeklyScheduleAddButton() {
-      console.log("onClickWeeklyScheduleAddButton");
     }
 
     // 스케줄 삭제 버튼 눌렀을때
@@ -146,17 +183,17 @@
     function onClickScheduleCompleteButton(e) {
       let url = /*[[ @{/api/schedule/complete} ]]*/ null;
       url += "/" + e.value; // scheduleIdx 값임.
-      const dailyScheduleEl = e.parentNode.parentNode.parentNode; // 테이블의 한 행의 dom을 가리킴.
+      const scheduleEl = e.parentNode.parentNode.parentNode; // 테이블의 한 행의 dom을 가리킴.
 
       axios.patch(url).then(function (res) {
         if (res.status === 200) {
 
           // completeCount 값을 보여주는 span을 업데이트.
-          let completeCountLabel = dailyScheduleEl.querySelector(".completeCountLabel");
+          let completeCountLabel = scheduleEl.querySelector(".completeCountLabel");
           completeCountLabel.innerHTML = res.data.completeCount;
 
           // 완료 횟수 프로그레스 바 업데이트
-          let completeCountBar = dailyScheduleEl.querySelector('.completeCountBar');
+          let completeCountBar = scheduleEl.querySelector('.completeCountBar');
           setProgressbarGauge(completeCountBar, res.data.completeCount, res.data.maxCompleteCount);
 
         }
@@ -184,58 +221,56 @@
 
     // 화면 로드 됐을때 ==============================================================================================================
     window.onload = function() {
+      const heroWriteParams = /*[[ ${heroWriteParams} ]]*/ null; // 캐릭터 편집 모달의 작성 결과
+      const scheduleWriteParams = /*[[ ${scheduleWriteParams} ]]*/ null;  // 스케줄 편집 모달의 작성 결과
+
+      // 에러가 발생한 경우 처리
       const error = /*[[ ${error} ]]*/ null;
-
-      // 캐릭터 편집 모달 폼의 캐릭터 아이콘 설정
-      const heroWriteParams = /*[[ ${heroWriteParams} ]]*/ null;
-      changeHeroIcon(heroWriteParams.typeIdx);
-
-      // 캐릭터 편집 모달 폼에서 POST 요청후 리다이렉션 했는데
-      // 유효성 검증에 실패하여 재입력 받아야하는 경우
-      // 사용자가 수정할 수 있게 다시 모달을 띄어줌.
       if (error) {
+        // 캐릭터 편집 모달에서 POST 요청후 새로고침 됐는데 유효성 검증에 실패하여 재입력 받아야하는 경우 사용자가 수정할 수 있게 다시 모달을 띄어줌.
         if (error.includes("didNotTypeHeroname") || error.includes("didNotSelectHerotype")) {
-          const modal = new bootstrap.Modal(document.querySelector('#heroWriteModal'), {
-            keyboard: true
-          });
+          openModal("heroWriteModal");
+        }
 
-          modal.show();
+        // 스케줄 편집 모달에서 POST 요청후 새로고침 됐는데 유효성 검증에 실패하여 재입력 받아야하는 경우 사용자가 수정할 수 있게 다시 모달을 띄어줌.
+        if (error.includes("didNotSelectScheduleIcon") || error.includes("didNotTypeSchedulename") || error.includes("didNotTypeValidMaxCompleteCount")) {
+          if (scheduleWriteParams.period == "D") {
+            openModal("dailyScheduleWriteModal");
+          } else if (scheduleWriteParams.period == "W") {
+            openModal("weeklyScheduleWriteModal");
+          }
         }
       }
 
-      // 일간 스케줄 편집 모달 폼의 캐릭터 아이콘 설정
-      const scheduleWriteParams = /*[[ ${scheduleWriteParams} ]]*/ null;
+      // 편집 모달 폼의 아이콘 설정
+      changeHeroIcon(heroWriteParams.typeIdx);
       changeScheduleIcon(scheduleWriteParams.typeIdx);
 
-      // 해당 스케줄 편집 모달에서 작성된 스케줄이 일간인지, 주간인지 서버에 보내주도록 함.
+      // 스케줄 편집 모달에서 작성된 스케줄이 일간인지, 주간인지 서버에 보내줄 수 있도록 hidden 태그의 기본 값을 초기화함.
       let periodEl = document.querySelector("#dailyScheduleWriteModal .schedulePeriodInput");
       periodEl.value = "D";
       periodEl = document.querySelector("#weeklyScheduleWriteModal .schedulePeriodInput");
       periodEl.value = "W";
 
-      // 일간 스케줄 편집 모달 폼에서 POST 요청후 리다이렉션 했는데
-      // 유효성 검증에 실패하여 재입력 받아야하는 경우
-      // 사용자가 수정할 수 있게 다시 모달을 띄어줌.
-      if (error) {
-        if (error.includes("didNotSelectScheduleIcon") || error.includes("didNotTypeSchedulename") || error.includes("didNotTypeValidMaxCompleteCount")) {
-
-          const modal = new bootstrap.Modal(document.querySelector('#dailyScheduleWriteModal'), {
-            keyboard: true
-          });
-
-          modal.show();
-        }
-      }
-
       // 일간 스케줄 리스트에서 초기화가 필요한 내용들
-      let dailyScheduleList = document.querySelectorAll(".dailySchedule");
-      for (e of dailyScheduleList) {
+      for (e of document.querySelectorAll(".dailySchedule")) {
 
         // 휴식 게이지 프로그레스 바 업데이트
         let restingGaugeBar = e.querySelector('.restingGaugeBar');
         let restingGauge = e.querySelector(".restingGaugeLabel").innerText;
         let maxRestingGauge = e.querySelector(".maxRestingGaugeLabel").innerText;
         setProgressbarGauge(restingGaugeBar, restingGauge, maxRestingGauge);
+
+        // 완료 횟수 프로그레스 바 업데이트
+        let completeCountBar = e.querySelector('.completeCountBar');
+        let completeCount = e.querySelector(".completeCountLabel").innerText;
+        let maxCompleteCount = e.querySelector(".maxCompleteCountLabel").innerText;
+        setProgressbarGauge(completeCountBar, completeCount, maxCompleteCount);
+
+      }
+
+      // 주간 스케줄 리스트에서 초기화가 필요한 내용들
+      for (e of document.querySelectorAll(".weeklySchedule")) {
 
         // 완료 횟수 프로그레스 바 업데이트
         let completeCountBar = e.querySelector('.completeCountBar');

@@ -19,7 +19,7 @@
       </div>
 
       <!-- 테이블 내용 -->
-      <div th:each="schedule : ${weeklyScheduleList}" class="row col-12 mt-2">
+      <div th:each="schedule : ${weeklyScheduleList}" class="weeklySchedule row col-12 mt-2">
 
         <!-- 아이콘 및 이름 -->
         <div class="row col-3 table-tr">
@@ -56,9 +56,9 @@
         <!-- 수정 및 삭제 버튼그룹 -->
         <div class="col-3 table-tr ms-3">
           <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button type="button" class="btn btn-warning">완료</button>
-            <button type="button" class="btn btn-secondary">수정</button>
-            <button type="button" class="btn btn-danger">삭제</button>
+            <button type="button" th:value="${schedule.idx}" class="btn btn-warning" onclick="onClickScheduleCompleteButton(this)">완료</button>
+            <button type="button" th:value="${schedule.idx}" class="btn btn-secondary" onclick="onClickScheduleEditButton(this)">수정</button>
+            <button type="button" th:value="${schedule.idx}" class="btn btn-danger" onclick="onClickScheduleRemoveButton(this)">삭제</button>
           </div>
         </div>
 
