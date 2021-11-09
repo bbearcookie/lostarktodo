@@ -10,10 +10,7 @@
         <div class="row col-3 table-th">
           <span class="col-12 d-flex justify-content-center">이름</span>
         </div>
-        <div class="col-3 table-th">
-          <span>휴식 게이지</span>
-        </div>
-        <div class="col-3 table-th">
+        <div class="col-6 table-th">
           <span>완료 횟수</span>
         </div>
         <div class="col-3 table-th justify-content-start">
@@ -22,7 +19,7 @@
       </div>
 
       <!-- 테이블 내용 -->
-      <div th:each="schedule : ${dailyScheduleList}" class="dailySchedule row col-12 mt-2">
+      <div th:each="schedule : ${weeklyScheduleList}" class="row col-12 mt-2">
 
         <!-- 아이콘 및 이름 -->
         <div class="row col-3 table-tr">
@@ -38,26 +35,8 @@
           <div th:text="${schedule.name}" class="col-7 table-tr justify-content-start">스케줄 이름</div>
         </div>
 
-        <!-- 휴식 게이지 프로그레스바와 라벨 -->
-        <div class="col-3">
-          <div class="progress mt-2">
-            <div
-              class="restingGaugeBar progress-bar progress-bar-striped progress-bar-animated bg-success"
-              role="progressbar"
-              aria-valuemin="0"
-              th:aria-valuenow="${schedule.restingGauge}"
-              th:aria-valuemax="${schedule.maxRestingGauge}"
-            ></div>
-          </div>
-          <div class="label">
-            <span class="restingGaugeLabel" th:text="${schedule.restingGauge}">현재 휴식게이지</span>
-            <span>&nbsp;/&nbsp;</span>
-            <span class="maxRestingGaugeLabel" th:text="${schedule.maxRestingGauge}">최대 휴식게이지</span>
-          </div>
-        </div>
-
         <!-- 완료 횟수 프로그레스바와 라벨 -->
-        <div class="col-3">
+        <div class="col-6">
           <div class="progress mt-2">
             <div
               class="completeCountBar progress-bar progress-bar-striped progress-bar-animated bg-warning"
@@ -77,9 +56,9 @@
         <!-- 수정 및 삭제 버튼그룹 -->
         <div class="col-3 table-tr ms-3">
           <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-            <button type="button" th:value="${schedule.idx}" class="btn btn-warning" onclick="onClickScheduleCompleteButton(this)">완료</button>
-            <button type="button" th:value="${schedule.idx}" class="btn btn-secondary" onclick="onClickDailyScheduleEditButton(this)">수정</button>
-            <button type="button" th:value="${schedule.idx}" class="btn btn-danger" onclick="onClickScheduleRemoveButton(this)">삭제</button>
+            <button type="button" class="btn btn-warning">완료</button>
+            <button type="button" class="btn btn-secondary">수정</button>
+            <button type="button" class="btn btn-danger">삭제</button>
           </div>
         </div>
 

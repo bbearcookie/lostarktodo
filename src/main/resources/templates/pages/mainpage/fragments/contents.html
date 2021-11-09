@@ -37,6 +37,8 @@
         <h5 class="ps-2 pt-3" style="font-weight: bold;">주간 스케줄</h5>
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#weeklyScheduleWriteModal" onclick="onClickWeeklyScheduleAddButton()">추가</button>
       </div>
+      <div th:replace="/pages/mainpage/fragments/components/weeklyScheduleTable.html :: wrapper"></div>
+      
     </section>
 
   </main>
