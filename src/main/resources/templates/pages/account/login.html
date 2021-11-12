@@ -8,16 +8,8 @@
   <body>
     <main class="form-signin text-center">
       <form th:action="@{/account/login}" method="post">
-        <img class="mb-4" src="/docs/5.1/assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
+        <img class="mb-4" th:src="@{/icon/logo}" alt="로고" width="72" height="57">
         <h1 class="h3 mb-3 fw-normal">로그인</h1>
-
-        <div th:if="${param.error}" class="alert alert-danger" role="alert">
-          Invalid username and password.
-        </div>
-  
-        <div th:if="${param.logout}" class="alert alert-primary" role="alert">
-            You have been logged out.
-        </div>
 
         <div th:if="${didNotTypeUsername}" class="alert alert-danger" role="alert">
           아이디를 입력해주세요.

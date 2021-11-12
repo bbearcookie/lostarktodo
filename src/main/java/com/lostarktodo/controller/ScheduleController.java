@@ -109,6 +109,20 @@ public class ScheduleController {
 		return url.getResult();
 	}
 	
+	@GetMapping(value = "/admin/schedule/calculation")
+	public String calculateSchedule(@AuthenticationPrincipal UserDTO userResult,
+									@RequestParam(value="watchingHeroIdx", required=false) String watchingHeroIdx,
+									Model model) {
+		URL url = new URL("redirect:/mainpage");
+		url.addQueryParam("watchingHeroIdx", watchingHeroIdx);
+		
+		if (userResult.getRole().equals("ROLE_ADMIN")) {
+			scheduleService.calculateRestingGauge();
+		}
+		
+		return url.getResult();
+	}
+	
 	@ResponseBody
 	@GetMapping(value = "/api/schedule/{scheduleIdx}")
 	public ScheduleDTO getScheduleInfo(@PathVariable String scheduleIdx, Model model) {
@@ -121,7 +135,6 @@ public class ScheduleController {
 	@PatchMapping(value = "/api/schedule/complete/{scheduleIdx}")
 	public ScheduleDTO increaseCompleteSchedule(@PathVariable String scheduleIdx, Model model) {
 		ScheduleDTO params = scheduleService.increaseCompleteSchedule(Integer.parseInt(scheduleIdx));
-		
 		return params;
 	}
 }

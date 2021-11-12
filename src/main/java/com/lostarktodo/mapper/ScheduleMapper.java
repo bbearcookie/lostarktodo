@@ -13,6 +13,7 @@ public interface ScheduleMapper {
 	public ScheduleDTO selectScheduleDetail(int idx);
 	public int updateSchedule(ScheduleDTO params);
 	public int deleteSchedule(int idx);
+	public List<ScheduleDTO> selectScheduleList();
 	public List<ScheduleDTO> selectDailyScheduleListByHeroidx(int heroIdx);
 	public List<ScheduleDTO> selectDailyScheduleListAndScheduleTypeByHeroidx(int heroIdx);
 	public List<ScheduleDTO> selectWeeklyScheduleListByHeroidx(int heroIdx);

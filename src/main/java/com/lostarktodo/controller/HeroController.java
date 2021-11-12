@@ -50,51 +50,7 @@ public class HeroController {
 		
 		// 캐릭터 생성
 		heroResult.setUserIdx(userResult.getIdx());
-		int newHeroIdx = heroService.registerHero(heroResult);
-		
-		// 캐릭터를 처음 생성하면 일일 스케줄로 카오스 던전, 가디언 토벌, 에포나 3종은 기본으로 추가해준다.
-		ScheduleDTO schedule;
-		schedule = new ScheduleDTO();
-		schedule.setIdx(0);
-		schedule.setName("카오스 던전");
-		schedule.setPeriod("D");
-		schedule.setTypeIdx(1);
-		schedule.setRestingGauge(0);
-		schedule.setMaxRestingGauge(100);
-		schedule.setCompleteCount(0);
-		schedule.setMaxCompleteCount(2);
-		schedule.setHeroIdx(newHeroIdx);
-		schedule.setDisabled("N");
-		schedule.setScheduleTypeDTO(null);
-		scheduleService.registerSchedule(schedule);
-
-		schedule = new ScheduleDTO();
-		schedule.setIdx(0);
-		schedule.setName("가디언 토벌");
-		schedule.setPeriod("D");
-		schedule.setTypeIdx(2);
-		schedule.setRestingGauge(0);
-		schedule.setMaxRestingGauge(100);
-		schedule.setCompleteCount(0);
-		schedule.setMaxCompleteCount(2);
-		schedule.setHeroIdx(newHeroIdx);
-		schedule.setDisabled("N");
-		schedule.setScheduleTypeDTO(null);
-		scheduleService.registerSchedule(schedule);
-		
-		schedule = new ScheduleDTO();
-		schedule.setIdx(0);
-		schedule.setName("에포나");
-		schedule.setPeriod("D");
-		schedule.setTypeIdx(4);
-		schedule.setRestingGauge(0);
-		schedule.setMaxRestingGauge(100);
-		schedule.setCompleteCount(0);
-		schedule.setMaxCompleteCount(3);
-		schedule.setHeroIdx(newHeroIdx);
-		schedule.setDisabled("N");
-		schedule.setScheduleTypeDTO(null);
-		scheduleService.registerSchedule(schedule);
+		heroService.registerHero(heroResult);
 		
 		// 캐릭터 생성 모달 폼 내용 초기화
 		url.removeQueryParam("name");

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.lostarktodo.domain.GlobalVariables;
 import com.lostarktodo.domain.HeroDTO;
 import com.lostarktodo.domain.HeroTypeDTO;
 import com.lostarktodo.domain.ScheduleDTO;
@@ -77,6 +78,7 @@ public class MainpageController {
 		model.addAttribute("heroWriteParams", heroWriteParams);
 		model.addAttribute("scheduleWriteParams", scheduleWriteParams);
 		model.addAttribute("error", error);
+		model.addAttribute("scheduleResetCycle", 6 - GlobalVariables.getScheduleResetCycle());
 		
 		return "pages/mainpage/index";
 	}

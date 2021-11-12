@@ -3,9 +3,26 @@
   <nav th:fragment="wrapper" class="navbar navbar-light bg-dark">
     <div class="container-fluid">
       <a class="navbar-brand text-light">LostarkTodo</a>
-      <form class="d-flex" th:action="@{/logout}" method="post">
-        <button class="w-100 btn btn-lg btn-primary" type="submit">로그아웃</button>
-      </form>
+
+      <div class="d-flex align-items-center">
+
+        <form class="d-flex" sec:authorize="hasRole('ROLE_ADMIN')" th:action="@{/admin/schedule/calculation}" method="get">
+          <input type="hidden" name="watchingHeroIdx" th:value="${watchingHeroIdx}"/>
+          <span style="width: 200px;">
+            <span class="text-light">주간 초기화까지</span>
+            <span class="text-light" th:text="${scheduleResetCycle}">1</span>
+            <span class="text-light">일 남음</span>
+          </span>
+          <div style="width: 20px;"></div>
+          <button class="btn btn-lg btn-primary" type="submit" style="width: 200px">다음 날</button>
+          <div style="width: 20px;"></div>
+        </form>
+
+        <form th:action="@{/logout}" method="post">
+          <button class="btn btn-lg btn-primary" type="submit" style="width: 200px">로그아웃</button>
+        </form>
+      </div>
+
     </div>
   </nav>
 </html>

@@ -197,7 +197,7 @@ public class MapperTests {
 	
 	@Test
 	public void testOfSelectDailyScheduleListAndScheduleTypeByHeroidx() {
-		List<ScheduleDTO> list = scheduleMapper.selectWeeklyScheduleListAndScheduleTypeByHeroidx(2);
+		List<ScheduleDTO> list = scheduleMapper.selectScheduleList();
 		System.out.println(list);
 	}
 }

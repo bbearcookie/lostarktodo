@@ -61,6 +61,15 @@
       idx = #{idx}
   </update>
   
+  <select id="selectScheduleList" resultType="ScheduleDTO">
+    SELECT
+      <include refid="scheduleColumns"/>
+    FROM
+      schedule
+    WHERE
+      disabled = 'N'
+  </select>
+  
   <select id="selectDailyScheduleListByHeroidx" parameterType="int" resultType="ScheduleDTO">
     SELECT
       <include refid="scheduleColumns"/>
