@@ -1,4 +1,4 @@
-package com.lostarktodo.provider;
+package com.lostarktodo.security;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.lostarktodo.context.UserContext;
 import com.lostarktodo.domain.UserDTO;
 import com.lostarktodo.service.AccountService;
 
@@ -37,8 +36,7 @@ public class AccountAuthenticationProvider implements AuthenticationProvider {
     	}
     	
     	// 타임리프 템플릿엔진을 적용한 html 파일에서 태그 속성으로 sec:authentication="name" 를 적으면 여기 토큰에서 보낸 userContext.getUser() 값이 반환된다.
-        UsernamePasswordAuthenticationToken authenticationToken = 
-        		new UsernamePasswordAuthenticationToken(userContext.getUser(), null, userContext.getAuthorities());
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userContext.getUser(), null, userContext.getAuthorities());
 
         return authenticationToken;
     }

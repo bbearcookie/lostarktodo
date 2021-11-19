@@ -1,4 +1,4 @@
-package com.lostarktodo.context;
+package com.lostarktodo.security;
 
 import java.util.Collection;
 
@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.User;
 import com.lostarktodo.domain.UserDTO;
 
 public class UserContext extends User {
-
     private final UserDTO user;
 
     public UserContext(UserDTO user, Collection<? extends GrantedAuthority> authorities) {
@@ -17,7 +16,6 @@ public class UserContext extends User {
     }
 
     public UserDTO getUser() {
-    	System.out.println("getUser(): " + user);
         return user;
     }
 }

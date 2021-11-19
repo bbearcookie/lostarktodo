@@ -21,6 +21,7 @@ import com.lostarktodo.service.HeroTypeService;
 import com.lostarktodo.service.ScheduleService;
 import com.lostarktodo.service.ScheduleTypeService;
 
+// 메인 페이지에서의 요청을 처리하는 컨트롤러
 @Controller
 public class MainpageController {
 	
@@ -36,9 +37,9 @@ public class MainpageController {
 	@Autowired
 	private ScheduleTypeService scheduleTypeService;
 
-	// @AuthenticationPrincipal 어노테이션으로 로그인된 유저의 UserDTO 정보를 가져올 수 있다!
+	// 메인 페이지 출력
 	@GetMapping(value = "/mainpage")
-	public String loginSuccess(@AuthenticationPrincipal UserDTO user,
+	public String loginSuccess(@AuthenticationPrincipal UserDTO user, // @AuthenticationPrincipal 어노테이션으로 로그인된 유저의 UserDTO 정보를 가져올 수 있다!
 							   @ModelAttribute HeroDTO heroWriteParams,
 							   @ModelAttribute ScheduleDTO scheduleWriteParams,
 							   @RequestParam(value="error", required=false) String error,

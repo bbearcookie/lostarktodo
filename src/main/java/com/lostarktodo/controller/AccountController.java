@@ -12,17 +12,20 @@ import com.lostarktodo.domain.UserDTO;
 import com.lostarktodo.mapper.UserMapper;
 import com.lostarktodo.service.AccountService;
 
+// 사용자 계정에 관한 요청을 처리하는 컨트롤러
 @Controller
 public class AccountController {
 	
 	@Autowired
 	private AccountService accountService;
 
+	// 로그인 페이지 출력
 	@GetMapping(value = "/account/login")
 	public String openAccountLogin(Model model) {
 		return "pages/account/login";
 	}
 	
+	// 회원가입 페이지 출력
 	@GetMapping(value = "/account/register")
 	public String openAccountRegister(Model model) {
 		UserDTO params = new UserDTO();
@@ -33,15 +36,15 @@ public class AccountController {
 		return "pages/account/register";
 	}
 
+	// 로그인 성공시
 	@PostMapping(value = "/account/login/success")
 	public String loginSuccess(Model model) {
 		return "redirect:/mainpage";
 	}
 	
+	// 로그인 실패시
 	@PostMapping(value = "/account/login/failure")
 	public String loginFailure(@ModelAttribute("params") final UserDTO params, Model model) {
-		System.out.println("POST /account/login/failure");
-		System.out.println(params);
 		
 		// 유효성 검사
 		if (params.getUsername() == "" || params.getUsername() == null) {
@@ -68,9 +71,9 @@ public class AccountController {
 		return "pages/account/login";
 	}
 	
+	// 회원가입 완료시
 	@PostMapping(value = "/account/register")
 	public String postAccountRegister(@ModelAttribute("params") final UserDTO params, Model model) {
-		System.out.println(params.toString());
 		
 		// 유효성 검사
 		if (params.getUsername() == "" || params.getUsername() == null) {

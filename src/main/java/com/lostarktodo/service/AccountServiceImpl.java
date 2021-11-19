@@ -10,10 +10,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.lostarktodo.context.UserContext;
 import com.lostarktodo.domain.UserDTO;
 import com.lostarktodo.mapper.UserMapper;
+import com.lostarktodo.security.UserContext;
 
+// 사용자 계정에 관한 비즈니스 로직을 담은 클래스
 @Service
 public class AccountServiceImpl implements AccountService {
 

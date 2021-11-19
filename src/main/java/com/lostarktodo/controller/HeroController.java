@@ -18,6 +18,7 @@ import com.lostarktodo.service.HeroService;
 import com.lostarktodo.service.ScheduleService;
 import com.lostarktodo.util.URL;
 
+// 캐릭터에 관한 요청을 처리하는 컨트롤러
 @Controller
 public class HeroController {
 	
@@ -27,6 +28,7 @@ public class HeroController {
 	@Autowired
 	private ScheduleService scheduleService;
 	
+	// 캐릭터 생성시
 	@PostMapping(value = "/hero/write")
 	public String createNewHero(@AuthenticationPrincipal UserDTO userResult,
 								@ModelAttribute HeroDTO heroResult,
@@ -59,6 +61,7 @@ public class HeroController {
 		return url.getResult();
 	}
 	
+	// 캐릭터 제거시
 	@PostMapping(value = "/hero/delete")
 	public String deleteHero(@AuthenticationPrincipal UserDTO userResult, @RequestParam String idx, Model model) {
 		URL url = new URL("redirect:/mainpage");
@@ -76,7 +79,7 @@ public class HeroController {
 		return url.getResult();
 	}
 	
-	// heroIdx에 해당하는 캐릭터의 정보를 json 형태로 반환.
+	// 해당 캐릭터의 정보를 REST 방식으로 반환.
 	@ResponseBody
 	@GetMapping(value = "/api/hero/{heroIdx}")
 	public HeroDTO getHeroInfo(@PathVariable String heroIdx, Model model) {
